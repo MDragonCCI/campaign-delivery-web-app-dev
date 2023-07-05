@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Campaign Delivery Revenue extractor {% endblock %}
 {% block content %}
-<h1 align="center">Campaign Delivery Revenue extractor</h1>
+<h1 align="center">Campaign Delivery - Campaign extractor</h1>
 
 <form method="POST">
     <h3 align="center">Broadsign Direct Envs</h3>
@@ -19,46 +19,23 @@
     </div>
     <h3 align="center">Broadsign Direct Credentials</h3>
     <div class="form-group">
-        <label for="email">Email Address</label>
+        <label for="email">Broadsign Direct Login</label>
         <input type="email"
                class="form-control"
                id="email"
                name="email"
-               placeholder="Enter email" />
+               placeholder="Broadsign Direct Login" />
     </div>
     <div class="form-group">
-        <label for="password">Password</label>
+        <label for="password">Broadsign Direct Password</label>
         <input type="password"
                class="form-control"
                id="password"
                name="password"
                placeholder="Enter password" />
     </div>
+ 
     <br />
-    <div class="form-group">
-        <!-- Date input -->
-        <label class="control-label" for="date">Date from</label>
-        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" />
-    </div>
-    <div class="form-group">
-        <!-- Date input -->
-        <label class="control-label" for="date1">Date till</label>
-        <input class="form-control" id="date" name="date1" placeholder="MM/DD/YYY" type="text" />
-    </div>
-    <br />
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            Placeholder
-        </label>
-    </div>
-    <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" >
-        <label class="form-check-label" for="flexCheckChecked">
-            Allocation statistics
-        </label>
-    </div>
-    <br />
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary">NEXT</button>
 </form>
 {% endblock %}

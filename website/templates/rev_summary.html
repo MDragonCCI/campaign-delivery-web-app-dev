@@ -4,6 +4,10 @@
 <h1>This is a Campaign Delivery Web app home page</h1>
 <form method="POST">
 
-    <button type="submit" class="btn btn-primary">Campaign extractor</button>
+    <button type="submit" class="btn btn-primary">Download report</button>
 </form>
+{% for table in tables %}
+{{titles[loop.index]}}
+{{ table|safe }}
+{% endfor %}
     {% endblock %}
