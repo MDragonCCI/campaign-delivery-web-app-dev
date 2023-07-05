@@ -33,11 +33,11 @@ def revenue_func():
     }
 		print(start_date, end_date)
 		if email == None or password == None:
-			flash("Broadsign Login or password is missinmg. Please try again", category="error")
+			flash("Broadsign Login or password is missing. Please try again", category="error")
 		else:
 			login = requests.request("POST", url=loginpage, headers={}, data=credentials, files=[])
 			if login.status_code == 200:
-				flash("Login sucess", category="success")
+				flash("Login successful!", category="success")
 				token= "session="+login.cookies["session"]
 				headers = {"Cookie": token}
 				return redirect(url_for("revenue.revenue_params"))

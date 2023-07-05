@@ -1,13 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Campaign Delivery toolkit Home {% endblock %}
 {% block content %}
-<h1>This is a Campaign Delivery Web app home page</h1>
+<h1>Campaign Extractor</h1>
+<hr>
+<h2>Report Summary</h2>
+<br>
 <form method="POST">
+    <div class="container">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary">Download report</button>
+          </div>
+        </div>
+      </div>
 
-    <button type="submit" class="btn btn-primary">Download report</button>
 </form>
-{% for table in tables %}
-{{titles[loop.index]}}
-{{ table|safe }}
-{% endfor %}
+<div class="table-container">
+    {% for table in tables %}
+    {{titles[loop.index]}}
+    {{ table|safe }}
+    {% endfor %}
+  </div>
+  
+
     {% endblock %}
