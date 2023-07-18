@@ -116,7 +116,7 @@ def revenue_pli():
 	global env
 	global csv_df
 	if allocation_stats != None:
-		allocation_status = 1
+		allocation_stats = 1
 	else:
 		allocation_stats = 0
 	csv_data = {
