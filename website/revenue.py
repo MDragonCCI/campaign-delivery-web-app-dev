@@ -5,6 +5,8 @@ import json
 from datetime import datetime
 import time
 import io
+import app_config
+from .views import _get_token_from_cache
 
 
 
@@ -13,6 +15,9 @@ revenue = Blueprint('revenue', __name__)
 
 @revenue.route('/revenue', methods=["GET", "POST"])
 def revenue_func():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
 	global headers
 	global env
 	headers = []
@@ -38,8 +43,8 @@ def revenue_func():
 			login = requests.request("POST", url=loginpage, headers={}, data=credentials, files=[])
 			if login.status_code == 200:
 				flash("Login successful!", category="success")
-				token= "session="+login.cookies["session"]
-				headers = {"Cookie": token}
+				token1= "session="+login.cookies["session"]
+				headers = {"Cookie": token1}
 				return redirect(url_for("revenue.revenue_params"))
 			else:
 				flash("Login failed. Check your credentials and try again", category="error")

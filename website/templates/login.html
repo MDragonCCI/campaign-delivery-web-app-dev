@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Campaign Delivery toolkit Login{% endblock %}
+{% block content %}
+<h1>Sign in with you Microsoft account</h1>
+
+<li><a href='{{ auth_url }}'>Sign In</a></li>
+
+    {% if config.get("B2C_RESET_PASSWORD_AUTHORITY") %}
+<li><a href='{{_build_auth_code_flow(authority=config["B2C_RESET_PASSWORD_AUTHORITY"])["auth_uri"]}}'>Reset Password</a></li>
+    {% endif %}
+
+<hr>
+    {% endblock %}
+
+
