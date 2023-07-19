@@ -14,6 +14,7 @@ flask-session>=0.3.2,<0.5
 requests>=2,<3
 msal>=1.7,<2
 app_config
+pandas
 # cachelib==0.1  # Only need this if you are running Python 2
 # Note: This sample does NOT directly depend on cachelib.
 # It is an indirect dependency of flask-session.
