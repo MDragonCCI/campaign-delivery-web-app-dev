@@ -4,7 +4,8 @@ import json
 from datetime import datetime
 import time
 import io
-from flask import flash
+from flask import flash, session
+
 
 
 
@@ -33,7 +34,25 @@ def login(env, email, password):
 
 def proposal_search(headers, env, start_date, end_date):
 	search_df = []
-	print(headers)
+	submitted = session.get("submitted", None)
+	booked = session.get("booked", None)
+	ended = session.get("ended", None)
+	hold = session.get("hold", None)
+	preempt = session.get("preempt", None)
+	start_date = session.get("start_date", None)
+	end_date = session.get("end_date", None)
+	status = ["live"]
+	if submitted != None:
+		status.append("submitted")
+	if booked != None:
+		status.append("booked")
+	if ended != None:
+		status.append("ended")
+	if hold != None:
+		status.append("held")
+		status.append("partially_held")
+
+	
 	search_url = env+"api/v1/proposal/search"
 	search_pl = json.dumps({
   "$top": 10000,
@@ -44,8 +63,7 @@ def proposal_search(headers, env, start_date, end_date):
       "dir": "desc"
     }
   ],
-  "status": ["live", "held", "submitted", "ended", "booked",
-  "partially_held"],
+  "status":status,
   "keyword": "",
   "only_user": False,
   "date": str("2023-06-26")
@@ -54,11 +72,57 @@ def proposal_search(headers, env, start_date, end_date):
 	search = requests.request("POST", url=search_url, headers=headers, data=search_pl)
 	if search.status_code == 200:
 		search_df = pd.DataFrame.from_dict(search.json()["data"])
+		to_drop = []
+		for i in range(0, len(search_df)):
+			proposal_start = search_df.iloc[i]["start_date"]
+			proposal_end = search_df.iloc[i]["end_date"]
+			proposal_status = search_df.iloc[i]["status"]
+			proposal_start_dt = datetime.date(datetime.strptime(proposal_start, "%Y-%m-%d"))
+			proposal_end_dt = datetime.date(datetime.strptime(proposal_end, "%Y-%m-%d"))
+			start_date = datetime.date(datetime.strptime(str(start_date), "%Y-%m-%d"))
+			end_date = datetime.date(datetime.strptime(str(end_date), "%Y-%m-%d"))
+			if start_date > proposal_end_dt:
+				to_drop.append(i)
+			elif proposal_start_dt > end_date:
+				to_drop.append(i)
+
+		print(to_drop)
+		search_df.drop(search_df.index[to_drop], inplace=True)
+		print(search_df)
 		return search_df
 	else:
 		search_df = []
 		return search_df
 
+def item_generator(json_input, lookup_key):
+    if isinstance(json_input, dict):
+        for k, v in json_input.items():
+            if k == lookup_key:
+                yield v
+            else:
+                yield from item_generator(v, lookup_key)
+    elif isinstance(json_input, list):
+        for item in json_input:
+            yield from item_generator(item, lookup_key)
+            
+            
+     
+
+
+def calc_playout(playout_df, df1):
+	df1 = df1
+	playout_df = playout_df
+	print(playout_df)
+	for ind in range(0, len(playout_df)):
+		screen_id = playout_df.iloc[ind]["id"]
+		breakdw = playout_df.iloc[ind]["breakdown"]
+		break_df = pd.DataFrame.from_dict(breakdw)
+		for i in range(0, len(break_df)):
+			av_saturation = break_df.iloc[i]["average_saturation"]
+			row = {"screen_id": screen_id,
+					"average_saturation": av_saturation}
+			df1.loc[len(df1)] = row
+	return df1 
 
 
 def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation_stats):
@@ -118,12 +182,34 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 		#print(type(start_date))
 		#print(type(proposal_start_dt))
 		if proposal_status == 11 and start_date >= proposal_end_dt:
-			print("skip "+ str(proposal_id), str(proposal_status), str(proposal_end_dt))
+			pass
 		elif start_date <= proposal_start_dt and end_date >= proposal_start_dt or proposal_status == 11 and start_date >= proposal_start_dt or proposal_status == 14 and start_date <= proposal_end_dt and end_date >= proposal_end_dt:
 			pli_url = env+"api/v1/proposal/"+str(proposal_id)+"/proposal_items"
 			pli = requests.request("POST", url=pli_url, headers=headers, data=[])
 			if pli.status_code == 200:
+				to_drop = []
 				pli_df = pd.DataFrame.from_dict(pli.json()["data"])
+				for i in range(0, len(pli_df)):
+					pli_status_id = pli_df.iloc[i]["status"]
+					pli_end_dt = pli_df.iloc[i]["end_date"]
+					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
+					pli_start_dt = pli_df.iloc[i]["start_date"]
+					pli_start =  datetime.date(datetime.strptime(pli_start_dt, "%Y-%m-%d"))
+					if pli_status_id == 1:
+						to_drop.append(i)
+					elif pli_status_id == 12:
+						to_drop.append(i)
+					elif pli_start > end_date:
+						to_drop.append(i)
+				print(to_drop)
+				pli_df.drop(pli_df.index[to_drop], inplace=True)
+			else:
+				flash("Broadsign Direct Search ERROR", category = "error") 
+
+			if pli_df.empty:
+				pass
+			else:
+
 				for index2 in range(0, len(pli_df)):
 					mode_df = pd.DataFrame.from_dict(pli_df.iloc[index2]["mode"])
 					tob_df = mode_df[mode_df["active"]!=False]
@@ -165,7 +251,7 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 					pli_prio = pli_df.iloc[index2]["priority"]
 					pli_is_preempt_raw = pli_df.iloc[index2]["is_preemptible"]
 					if pli_is_preempt_raw != True:
-						if pli_status_id == 11 and pli_perf_update != None:
+						if pli_status_id == 11 and pli_perf_update != None or  pli_status_id == 14 and pli_perf_update != None:
 							pli_perf_actual = (pli_df.iloc[index2]["performance"])["actual"]
 							pli_perf_projected = (pli_df.iloc[index2]["performance"])["projected"]
                         
@@ -174,33 +260,20 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 								pli_cp = "N/A"
 								pli_perf_projected = "N/A"
 							else:
-								pli_perf_update_tm = datetime.time(datetime.strptime(str(pli_perf_update), "%Y-%m-%d %H:%M:%S"))
-								pli_perf_update_dt =  datetime.date(datetime.strptime(str(pli_perf_update), "%Y-%m-%d %H:%M:%S"))
-								pli_start_dt = datetime.date(datetime.strptime(str(pli_start_dt), "%Y-%m-%d"))
-								delta_days = pli_perf_update_dt -pli_start_dt
-								delta_days = delta_days.days
-								print(delta_days, proposal_id, pli_start_dt, pli_perf_update, pli_perf_actual, pli_perf_projected)
-								if delta_days < 1:
-									delta_days = 1
-									aprox_daily = pli_perf_projected / (delta_days)
-								else:
-									aprox_daily = pli_perf_projected / (delta_days+1)
-								up_till_today = aprox_daily * delta_days
-								pli_perf_update_tm= str(pli_perf_update_tm).split(':')
-								x=list(map(int,pli_perf_update_tm))
-								today_top_up = ((x[0]*60 + x[1]))/1440 * aprox_daily
-								pli_cp = round(pli_perf_actual / (up_till_today + today_top_up)* 100,0)
+								pli_cp = round((pli_perf_actual * 100) / pli_perf_projected,0)	
 						else:
 							pli_cp = "N/A"
 							pli_perf_projected = "N/A"
 
 						if (pli_status_id == 9 and allocation_stats == 1) or (pli_status_id == 10 and allocation_stats == 1) or (pli_status_id == 11 and allocation_stats == 1):
-							playout_url = env+"api/v1/proposal/proposal_item/"+str(pli_id)+"/playout/csv"
+							playout_url = env+"api/v1/proposal/proposal_item/"+str(pli_id)+"/playout"
 							playout = requests.request("GET", url = playout_url, headers=headers, data=[])
 							if playout.status_code == 200:
-								r = playout.content
+								#df1 = {"screen_id": [],
+								#		"average_saturation": []}
+								#df1 = pd.DataFrame(df1)
 								try:
-									df1 = pd.read_csv(io.StringIO(r.decode('utf-8')))
+									playout_df = pd.DataFrame.from_dict(playout.json()["screens"])
 								except NameError:
 									pli_std = "N/A"
 									pli_mean = "N/A"
@@ -208,7 +281,14 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 									pli_std = "N/A"
 									pli_mean = "N/A"
 								else:
-									df1 = pd.read_csv(io.StringIO(r.decode('utf-8')))
+									output = []
+									for i in item_generator(playout.json()["screens"], "average_saturation"):
+										ans = {"average_saturation": i}
+										output.append(ans)
+									df1 = pd.DataFrame.from_dict(output)
+
+									
+									print(df1)
 									try:
 										df1.loc[df1['average_saturation']== -1, 'average_saturation' ] =0
 									except NameError:
@@ -357,9 +437,9 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
     "Allocation Av. Saturation": pli_mean
 }
 					if pli_status_id == 1 and pli_status_id == 12:
-						print(csv_row)
+						pass
 					elif pli_status_id == 14 and start_date >= pli_end:
-						print(csv_row)
+						pass
 					elif pli_status_id != 1 and pli_status_id != 12:
 						csv_df.loc[len(csv_df)] = csv_row
 						print(csv_row)
@@ -367,8 +447,7 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
                     
                     
                     
-			else:
-				flash("Broadsign Direct Search ERROR", category = "error")
+		
 	return csv_df
 
 

@@ -65,6 +65,13 @@ def revenue_params():
 		start_date = request.form.get("date")
 		end_date = request.form.get("date1")
 		allocation_stats = request.form.get("Allocation_Stats")
+		session["submitted"] = request.form.get("Submitted")
+		session["booked"] = request.form.get("Booked")
+		session["ended"] = request.form.get("Ended")
+		session["hold"] = request.form.get("Hold")
+		session["preempt"] = request.form.get("preempt")
+		session["start_date"] = request.form.get("date")
+		session["end_date"] = request.form.get("date1")
 		print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
