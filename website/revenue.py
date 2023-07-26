@@ -7,7 +7,8 @@ import time
 import io
 import app_config
 from .views import _get_token_from_cache
-from .scripts import login, proposal_search, campaign_ectractor
+from .scripts import login, proposal_search, campaign_ectractor,  run_campaign_extractor
+import asyncio
  
 
 
@@ -72,6 +73,7 @@ def revenue_params():
 		session["preempt"] = request.form.get("preempt")
 		session["start_date"] = request.form.get("date")
 		session["end_date"] = request.form.get("date1")
+		session["temp_json"] = []
 		print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
@@ -83,8 +85,11 @@ def revenue_params():
 			if search_df.empty:
 				flash("Search error try again", category = "error")
 			else:
-				csv_df = campaign_ectractor(headers, env, start_date, end_date, search_df, allocation_stats)
-				session["data"] = csv_df.to_json()
+				#campaign_ectractor(headers, env, start_date, end_date, search_df, allocation_stats)
+				#session["data"] = csv_df.to_json()
+				#print(session.get("temp_json"))
+				#if  __name__ == "__main__":
+				asyncio.run(run_campaign_extractor(search_df, allocation_stats))
 				return redirect(url_for("revenue.rev_summary"))
 	return render_template("rev_params.html")
 
@@ -96,8 +101,8 @@ def rev_summary():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
-	csv_json = session.get("data", None)
-	csv_df = pd.read_json(csv_json)
+	csv_json = session.get("temp_json", None)
+	csv_df = pd.DataFrame.from_dict(csv_json)
 	if request.method == "POST":
 		return Response(
        csv_df.to_csv(index = False),

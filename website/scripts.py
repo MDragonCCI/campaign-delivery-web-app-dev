@@ -5,6 +5,7 @@ from datetime import datetime
 import time
 import io
 from flask import flash, session
+import asyncio
 
 
 
@@ -124,8 +125,22 @@ def calc_playout(playout_df, df1):
 			df1.loc[len(df1)] = row
 	return df1 
 
+async def run_campaign_extractor(search_df, allocation_stats):
+	search_df = search_df
+	allocation_stats = allocation_stats
+	list_of_tasks = []
+	for index in range(0, len(search_df)):
+		list_of_tasks.append(campaign_ectractor(search_df, allocation_stats, index))
+	await asyncio.sleep(2)
+	await asyncio.gather(*list_of_tasks)
 
-def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation_stats):
+
+async def campaign_ectractor(search_df, allocation_stats, index):
+	start_date = session.get("start_date", None)
+	headers = session.get("headers", None)
+	env = session.get("env", None)
+	end_date = session.get("end_date", None)
+	index = index
 	if allocation_stats != None:
 		allocation_stats = 1
 	else:
@@ -167,9 +182,9 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
     "Allocation St. Dev": [],
     "Allocation Av. Saturation": []
 }
-	csv_df = pd.DataFrame(csv_data)
+	#csv_df = pd.DataFrame(csv_data)
 
-	for index in range(0, len(search_df)):
+	if 1 == 1:
 		proposal_id = search_df.iloc[index]["id"]
 		proposal_name = search_df.iloc[index]["name"]
 		proposal_start = search_df.iloc[index]["start_date"]
@@ -195,6 +210,8 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
 					pli_start_dt = pli_df.iloc[i]["start_date"]
 					pli_start =  datetime.date(datetime.strptime(pli_start_dt, "%Y-%m-%d"))
+					pli_std = "N/A"
+					pli_mean = "N/A"
 					if pli_status_id == 1:
 						to_drop.append(i)
 					elif pli_status_id == 12:
@@ -288,7 +305,7 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 									df1 = pd.DataFrame.from_dict(output)
 
 									
-									print(df1)
+									#print(df1)
 									try:
 										df1.loc[df1['average_saturation']== -1, 'average_saturation' ] =0
 									except NameError:
@@ -441,14 +458,15 @@ def campaign_ectractor(headers, env, start_date, end_date, search_df, allocation
 					elif pli_status_id == 14 and start_date >= pli_end:
 						pass
 					elif pli_status_id != 1 and pli_status_id != 12:
-						csv_df.loc[len(csv_df)] = csv_row
-						print(csv_row)
+						session["temp_json"].append(csv_row)
+						#csv_df.loc[len(csv_df)] = csv_row
+						#print(csv_row)
 				 
                     
                     
                     
 		
-	return csv_df
+	#return csv_df
 
 
 
