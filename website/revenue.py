@@ -41,6 +41,8 @@ def revenue_func():
 				flash("Login failed. Try egain", category = "error")
 			else:
 				session["headers"] = header
+				session["iteration"] = []
+				session["is_done"] = 0
 				return redirect(url_for("revenue.revenue_params"))
 			
 				
@@ -54,18 +56,37 @@ def revenue_params():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
-	headers = session.get("headers", None)
-	print(headers)
-	env = session.get("env", None)
-	print(env)
+	#headers = session.get("headers", None)
+	
+	#env = session.get("env", None)
+	
 	start_date = []
 	end_date = []
-	allocation_stats =[]
+	#allocation_stats =[]
+	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
+		return redirect(url_for("revenue.rev_summary"))
+	elif len(session.get("iteration")) == 0:
+		pass
+	else:
+		if len(session.get("iteration")) < 50:
+			N = len(session.get("iteration"))
+		else:
+			N = 50
+		result = []
+		for index in range(N):
+			result.append(session.get("iteration")[index])
+		for index in range(N):
+			opped_item = session.get("iteration").pop(0)
+		print(session.get("iteration"))
+		print(type(result))
+		print(type(result))
+		asyncio.run(run_campaign_extractor(result))
+		return redirect(url_for("revenue.revenue_params"))
 	if request.method == "POST":
 		print(request.form)
-		start_date = request.form.get("date")
-		end_date = request.form.get("date1")
-		allocation_stats = request.form.get("Allocation_Stats")
+		#start_date = request.form.get("date")
+		#end_date = request.form.get("date1")
+		session["allocation_stats"] = request.form.get("Allocation_Stats")
 		session["submitted"] = request.form.get("Submitted")
 		session["booked"] = request.form.get("Booked")
 		session["ended"] = request.form.get("Ended")
@@ -81,16 +102,24 @@ def revenue_params():
 			flash("Date is missing", category = "error")
 		else:
 			flash("Creation of the report started. It might take few minutes to complite. Please do not refresh the page", category="success")
-			search_df = proposal_search(headers, env, start_date, end_date)
-			if search_df.empty:
+			search_df = proposal_search()
+			n = len(search_df)
+			iteration = [i for i in range(0, n)]
+			session["iteration"] = iteration
+			search_json = search_df.to_json()
+			print(search_df)
+			if search_df is None:
 				flash("Search error try again", category = "error")
 			else:
 				#campaign_ectractor(headers, env, start_date, end_date, search_df, allocation_stats)
 				#session["data"] = csv_df.to_json()
 				#print(session.get("temp_json"))
 				#if  __name__ == "__main__":
-				asyncio.run(run_campaign_extractor(search_df, allocation_stats))
-				return redirect(url_for("revenue.rev_summary"))
+				#asyncio.run(run_campaign_extractor(search_df, allocation_stats))
+				session["is_done"] = 1
+				session["search_json"] = search_json
+				print(session.get("search_df"))
+				return redirect(url_for("revenue.revenue_params"))
 	return render_template("rev_params.html")
 
 
