@@ -33,7 +33,11 @@ def login(env, email, password):
 
 
 
-def proposal_search(headers, env, start_date, end_date):
+def proposal_search():
+	#start_date = session.get("start_date", None)
+	headers = session.get("headers", None)
+	env = session.get("env", None)
+	#end_date = session.get("end_date", None)
 	search_df = []
 	submitted = session.get("submitted", None)
 	booked = session.get("booked", None)
@@ -125,20 +129,27 @@ def calc_playout(playout_df, df1):
 			df1.loc[len(df1)] = row
 	return df1 
 
-async def run_campaign_extractor(search_df, allocation_stats):
-	search_df = search_df
-	allocation_stats = allocation_stats
+async def run_campaign_extractor(result):
+	#result = result
 	list_of_tasks = []
-	for index in range(0, len(search_df)):
-		list_of_tasks.append(campaign_ectractor(search_df, allocation_stats, index))
+	for i in range(0, len(result)):
+		list_of_tasks.append(campaign_ectractor(result[i]))
 	await asyncio.sleep(2)
+	print(result)
+	print(*list_of_tasks)
 	await asyncio.gather(*list_of_tasks)
 
 
-async def campaign_ectractor(search_df, allocation_stats, index):
+async def campaign_ectractor(index):
+	search_json = session.get("search_json", None)
+	#print(search_json)
+	search_df = pd.read_json(search_json)
+	allocation_stats = session.get("allocation_stats", None)
+	print(search_df)
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
 	env = session.get("env", None)
+	print(index)
 	end_date = session.get("end_date", None)
 	index = index
 	if allocation_stats != None:
