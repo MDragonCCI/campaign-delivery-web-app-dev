@@ -2,11 +2,13 @@ from flask import Flask
 import app_config
 from flask_session import Session  # https://pythonhosted.org/Flask-Session
 from .views import _build_auth_code_flow
+import os
 
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 def create_app():
     app = Flask(__name__)
-    app.config["SECRET_KEY"] = "AKJkfjdkalsfsadfasdf"
+    app.config["SECRET_KEY"] = SECRET_KEY
     app.config.from_object(app_config)
     Session(app)
     # This section is needed for url_for("foo", _external=True) to automatically
