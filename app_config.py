@@ -6,7 +6,7 @@ CLIENT_ID = "cefe6f8a-4b51-4daf-a86a-d4d9e765ba63" # Application (client) ID of 
 # In a production app, we recommend you use a more secure method of storing your secret,
 # like Azure Key Vault. Or, use an environment variable as described in Flask's documentation:
 # https://flask.palletsprojects.com/en/1.1.x/config/#configuring-from-environment-variables
-#CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
 if not CLIENT_SECRET:
     raise ValueError("Need to define CLIENT_SECRET environment variable")
 
