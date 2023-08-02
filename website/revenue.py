@@ -67,9 +67,10 @@ def revenue_params():
 	#allocation_stats =[]
 	
 	if request.method == "POST":
-		print(request.form)
-		#start_date = request.form.get("date")
-		#end_date = request.form.get("date1")
+		#print(request.form)
+		start_date = request.form.get("date")
+		end_date = request.form.get("date1")
+		print(type(start_date), end_date)
 		session["allocation_stats"] = request.form.get("Allocation_Stats")
 		session["submitted"] = request.form.get("Submitted")
 		session["booked"] = request.form.get("Booked")
@@ -82,10 +83,11 @@ def revenue_params():
 		print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
-		elif start_date == "" or end_date == "":
-			flash("Date is missing", category = "error")
+		elif request.form.get("date1") == "" or request.form.get("date") == "":
+			flash("Dates are missing", category = "error")
 		else:
 			flash("Creation of the report started. It might take few minutes to complite. Please do not refresh the page", category="success")
+			session["ce_last_run"] = None
 			search_df = proposal_search()
 			n = len(search_df)
 			session["proposal_total_numbers"] = n
@@ -121,6 +123,8 @@ def revenue_waiting():
 	
 	#allocation_stats =[]
 	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
+		session["ce_last_run"] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+		session["ce_created"] = time.strftime("%Y%m%d_%H%M%S")
 		return redirect(url_for("revenue.rev_summary"))
 	else:
 		if len(session.get("iteration")) < 50:
@@ -154,11 +158,13 @@ def rev_summary():
 	csv_json = session.get("temp_json", None)
 	csv_df = pd.DataFrame.from_dict(csv_json)
 	if request.method == "POST":
+		last_run = session.get("ce_created")
+		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_report_"+str(last_run)+".csv"}
+		print(file_headers)
 		return Response(
        csv_df.to_csv(index = False),
        mimetype="text/csv",
-       headers={"Content-disposition":
-       "attachment; filename=filename.csv"})
+       headers=file_headers)
 	return render_template("rev_summary.html", tables=[csv_df.to_html(classes='data', index = False)], titles=csv_df.columns.values)
 
 

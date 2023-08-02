@@ -70,8 +70,7 @@ def proposal_search():
   ],
   "status":status,
   "keyword": "",
-  "only_user": False,
-  "date": str("2023-06-26")
+  "only_user": False
 })
 
 	search = requests.request("POST", url=search_url, headers=headers, data=search_pl)
@@ -149,6 +148,7 @@ async def campaign_ectractor(index):
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
 	env = session.get("env", None)
+	preempt = session.get("preempt", None)
 	print(index)
 	end_date = session.get("end_date", None)
 	index = index
@@ -216,6 +216,7 @@ async def campaign_ectractor(index):
 				to_drop = []
 				pli_df = pd.DataFrame.from_dict(pli.json()["data"])
 				for i in range(0, len(pli_df)):
+					pli_is_preempt_raw = pli_df.iloc[i]["is_preemptible"]
 					pli_status_id = pli_df.iloc[i]["status"]
 					pli_end_dt = pli_df.iloc[i]["end_date"]
 					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
@@ -228,6 +229,8 @@ async def campaign_ectractor(index):
 					elif pli_status_id == 12:
 						to_drop.append(i)
 					elif pli_start > end_date:
+						to_drop.append(i)
+					elif pli_is_preempt_raw is True and preempt != 1:
 						to_drop.append(i)
 				print(to_drop)
 				pli_df.drop(pli_df.index[to_drop], inplace=True)
