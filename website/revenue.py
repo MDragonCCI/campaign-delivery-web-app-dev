@@ -139,10 +139,11 @@ def revenue_waiting():
 		asyncio.run(run_campaign_extractor(result))
 	#proposal_total_numbers = session.get("proposal_total_numbers")
 	#proposal_done = session.get("proposal_done")
+	session["proposal_progress"] = session.get("proposal_done")*100/session.get("proposal_total_numbers")
 	#proposal_done = session.get("proposal_done")
 	csv_json = session.get("temp_json", None)
 	csv_df = pd.DataFrame.from_dict(csv_json)	
-	return render_template("revenue_waiting.html", tables=[csv_df.to_html(classes='data', index = False)], titles=csv_df.columns.values,)
+	return render_template("revenue_waiting.html", tables=[csv_df.to_html(classes='data', index = False)], titles=csv_df.columns.values)
 
 
 @revenue.route("revenue/summary", methods=["GET", "POST"])
