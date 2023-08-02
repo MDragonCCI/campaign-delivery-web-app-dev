@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Campaign Delivery toolkit Home {% endblock %}
+{% block head %}<meta http-equiv="refresh" content="0.1">{% endblock %}
+{% block content %}
+<h1>Campaign Extractor</h1>
+<hr>
+<h2>Extracting Live data from Brodsign this might take 5-10 mins.</h2>
+<br>
+<form method="POST">
+    <div class="d-flex justify-content-center"></div>
+       
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="{{session.get("proposal_done")}}" aria-valuemin="0" aria-valuemax="{{session.get("proposal_total_numbers")}}" style="width: 100%"></div>
+        </div>
+ 
+
+    <h3>{{session.get("proposal_done")}} proposals out of {{session.get("proposal_total_numbers")}}</h3>
+
+
+</form>
+<p>Preview of the report</p>
+<div class="table-container">
+    {% for table in tables %}
+    {{titles[loop.index]}}
+    {{ table|safe }}
+    {% endfor %}
+</div>
+
+
+    {% endblock %}

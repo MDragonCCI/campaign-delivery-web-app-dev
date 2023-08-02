@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='light-theme.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='dark-theme.css') }}">
-    
+    {% block head %}{% endblock %}
     <title>{% block title %}Campaign Delivery toolkit{% endblock %}</title>
 </head>
 
