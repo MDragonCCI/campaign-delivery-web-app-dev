@@ -11,29 +11,29 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        </div>
+    </div>
     <div id="content">
         <h3>Select date range for the report</h3>
         <div class="container">
             <div class="row">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <!-- Date input -->
-                  <label class="control-label" for="date">Date from</label>
-                  <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- Date input -->
+                        <label class="control-label" for="date">Date from</label>
+                        <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" />
+                    </div>
                 </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <!-- Date input -->
-                  <label class="control-label" for="date1">Date till</label>
-                  <input class="form-control" id="date1" name="date1" placeholder="YYYY-MM-DD" type="text" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <!-- Date input -->
+                        <label class="control-label" for="date1">Date till</label>
+                        <input class="form-control" id="date1" name="date1" placeholder="YYYY-MM-DD" type="text" />
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          
-          
+        </div>
+
+
         <br />
         <div class="container">
             <div class="row">
@@ -74,9 +74,9 @@
                 <div class="col-md-6">
                     <h4>Additional options:</h4>
                     <div class="form-check param">
-                        <input class="form-check-input" type="checkbox" value="1" name="preempt" id="preempt" checked>
+                        <input class="form-check-input" type="checkbox" value="1" name="preempt" id="preempt">
                         <label class="form-check-label" for="preempt">
-                            Pre-emptable
+                            Preemptibles
                         </label>
                     </div>
                     <div class="form-check param">
@@ -88,20 +88,25 @@
                 </div>
             </div>
             <br />
-            
-          </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 text-center">
-                <button type="submit" class="btn btn-primary" style="width: 40%; height: 50px;" onclick="loading();">Generate</button>
-              </div>
-            </div>
-          </div>
+
         </div>
-          
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-primary" style="width: 40%; height: 50px;" onclick="loading();">Generate</button>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        {% if session.get("ce_last_run") %}
+
+        <p>The last run of the report was on the {{session.get("ce_last_run")}} click <a href='/revenue/summary'>here</a> to access it! </p>
+        {% endif %}
+
+        {% endblock %}
+    </div>
+
 </form>
 
 
-
-
-{% endblock %}
