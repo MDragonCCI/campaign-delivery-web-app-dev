@@ -51,6 +51,8 @@ def revenue_func():
 				
 	return render_template("revenue.html")
 
+
+
 @revenue.route("revenue/params", methods=["GET", "POST"])
 def revenue_params():
 	token = _get_token_from_cache(app_config.SCOPE)
@@ -63,25 +65,7 @@ def revenue_params():
 	start_date = []
 	end_date = []
 	#allocation_stats =[]
-	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
-		return redirect(url_for("revenue.rev_summary"))
-	elif len(session.get("iteration")) == 0:
-		pass
-	else:
-		if len(session.get("iteration")) < 50:
-			N = len(session.get("iteration"))
-		else:
-			N = 50
-		result = []
-		for index in range(N):
-			result.append(session.get("iteration")[index])
-		for index in range(N):
-			opped_item = session.get("iteration").pop(0)
-		print(session.get("iteration"))
-		print(type(result))
-		print(type(result))
-		asyncio.run(run_campaign_extractor(result))
-		return redirect(url_for("revenue.revenue_params"))
+	
 	if request.method == "POST":
 		print(request.form)
 		#start_date = request.form.get("date")
@@ -104,6 +88,8 @@ def revenue_params():
 			flash("Creation of the report started. It might take few minutes to complite. Please do not refresh the page", category="success")
 			search_df = proposal_search()
 			n = len(search_df)
+			session["proposal_total_numbers"] = n
+			session["proposal_done"] = 0
 			iteration = [i for i in range(0, n)]
 			session["iteration"] = iteration
 			search_json = search_df.to_json()
@@ -119,10 +105,44 @@ def revenue_params():
 				session["is_done"] = 1
 				session["search_json"] = search_json
 				print(session.get("search_df"))
-				return redirect(url_for("revenue.revenue_params"))
+				return redirect(url_for("revenue.revenue_waiting"))
 	return render_template("rev_params.html")
 
 
+
+@revenue.route("revenue/waiting", methods=["GET"])
+def revenue_waiting():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
+	#headers = session.get("headers", None)
+	
+	#env = session.get("env", None)
+	
+	#allocation_stats =[]
+	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
+		return redirect(url_for("revenue.rev_summary"))
+	else:
+		if len(session.get("iteration")) < 50:
+			N = len(session.get("iteration"))
+		else:
+			N = 10
+		result = []
+		session["proposal_done"] = session.get("proposal_done") + N
+		for index in range(N):
+			result.append(session.get("iteration")[index])
+		for index in range(N):
+			opped_item = session.get("iteration").pop(0)
+		print(session.get("iteration"))
+		print(type(result))
+		print(type(result))
+		asyncio.run(run_campaign_extractor(result))
+	#proposal_total_numbers = session.get("proposal_total_numbers")
+	#proposal_done = session.get("proposal_done")
+	#proposal_done = session.get("proposal_done")
+	csv_json = session.get("temp_json", None)
+	csv_df = pd.DataFrame.from_dict(csv_json)	
+	return render_template("revenue_waiting.html", tables=[csv_df.to_html(classes='data', index = False)], titles=csv_df.columns.values,)
 
 
 @revenue.route("revenue/summary", methods=["GET", "POST"])
