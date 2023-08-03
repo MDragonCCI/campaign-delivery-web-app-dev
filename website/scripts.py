@@ -286,7 +286,10 @@ async def campaign_ectractor(index):
 							pli_perf_actual = (pli_df.iloc[index2]["performance"])["actual"]
 							pli_perf_projected = (pli_df.iloc[index2]["performance"])["projected"]
                         
-
+							if pli_perf_actual is None:
+								pli_perf_actual = 0
+							if pli_perf_projected is None:
+								pli_perf_projected = 0
 							if pli_perf_actual < 1 or pli_perf_projected < 1:
 								pli_cp = "N/A"
 								pli_perf_projected = "N/A"

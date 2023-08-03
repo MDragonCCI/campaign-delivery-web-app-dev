@@ -63,3 +63,9 @@ table {
     width:80%;
     margin: 0 auto;
 }
+
+.content {
+    max-width: 500px;
+    margin: auto;
+}
+
