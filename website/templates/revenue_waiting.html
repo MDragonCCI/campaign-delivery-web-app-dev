@@ -22,8 +22,8 @@
 <br />
 <br />
 <script>
-const FPS = 10
-               let pixel = 20
+const FPS = 12
+               let pixel = 16
                let cols = 8
                let rows = 16
                let frame = 0
@@ -35,8 +35,9 @@ const FPS = 10
                let canvas = document.createElement('CANVAS')
                canvas.width = pixel * cols
                canvas.height = pixel * rows
-               canvas.style.background = 'black'
+               canvas.style.background = 'greay'
                canvas.style = "position:absolute; left: 50%; width: 400px; margin-left: -200px;";
+               canvas.style.background = 'black'
                document.body.appendChild(canvas)
 
                let ctx = canvas.getContext('2d')
