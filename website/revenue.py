@@ -130,7 +130,7 @@ def revenue_waiting():
 		if len(session.get("iteration")) < 50:
 			N = len(session.get("iteration"))
 		else:
-			N = 10
+			N = 20
 		result = []
 		session["proposal_done"] = session.get("proposal_done") + N
 		for index in range(N):
