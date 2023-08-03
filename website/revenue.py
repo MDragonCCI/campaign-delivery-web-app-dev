@@ -79,7 +79,6 @@ def revenue_params():
 		session["preempt"] = request.form.get("preempt")
 		session["start_date"] = request.form.get("date")
 		session["end_date"] = request.form.get("date1")
-		session["temp_json"] = []
 		print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
@@ -88,6 +87,7 @@ def revenue_params():
 		else:
 			flash("Creation of the report started. It might take few minutes to complite. Please do not refresh the page", category="success")
 			session["ce_last_run"] = None
+			session["temp_json"] = []
 			search_df = proposal_search()
 			n = len(search_df)
 			session["proposal_total_numbers"] = n

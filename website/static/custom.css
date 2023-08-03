@@ -1,0 +1,459 @@
+body.t {
+    height: 100%;
+    background: #000;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.tetrisbg {
+    width: 400px;
+    height: 500px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.a, .b, .c, .d, .e, .f, .g, .h, .i, .j {
+    background: #000;
+    border: 1px solid;
+    border-color: #000;
+    height: 60px;
+    width: 60px;
+    display: inline-block;
+}
+
+    .a:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+    }
+
+    .b:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+    }
+
+    .c:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+    }
+
+    .c:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+    }
+
+    .d:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: .5s;
+    }
+
+    .d:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: .5s;
+    }
+
+    .d:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1s;
+        animation-delay: .5s;
+    }
+
+    .c:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: .5s;
+    }
+
+    .e:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 1s;
+    }
+
+    .e:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 1s;
+    }
+
+    .e:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1s;
+        animation-delay: 1s;
+    }
+
+
+    .f:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 1.5s;
+    }
+
+    .f:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 1.5s;
+    }
+
+    .f:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1s;
+        animation-delay: 1.5s;
+    }
+
+    .g:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 2s;
+    }
+
+    .g:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 2s;
+    }
+
+    .g:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1s;
+        animation-delay: 2s;
+    }
+
+    .h:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 2.5s;
+    }
+
+    .h:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 2.5s;
+    }
+
+    .h:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1s;
+        animation-delay: 2.5s;
+    }
+
+    .i:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 3s;
+    }
+
+    .i:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 3s;
+    }
+
+    .i:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: 1.5s;
+        animation-delay: 3s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(2) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 3.5s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(3) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 3.5s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(4) {
+        position: relative;
+        animation-name: orange;
+        animation-duration: .5s;
+        animation-delay: 3.5s;
+        animation-fill-mode: forwards;
+    }
+
+
+    .a:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: .5s;
+        animation-delay: 4s;
+    }
+
+    .a:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: .5s;
+        animation-delay: 4s;
+    }
+
+    .b:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 4s;
+    }
+
+    .b:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 4s;
+    }
+
+    .c:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 4.5s;
+    }
+
+    .c:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 4.5s;
+    }
+
+    .d:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 5s;
+    }
+
+    .d:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 5s;
+    }
+
+    .e:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 5.5s;
+    }
+
+    .e:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 5.5s;
+    }
+
+    .f:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 6s;
+    }
+
+    .f:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 6s;
+    }
+
+    .g:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 6.5s;
+    }
+
+    .g:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 6.5s;
+    }
+
+    .h:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 7s;
+    }
+
+    .h:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 7s;
+    }
+
+    .i:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 7.5s;
+        animation-fill-mode: forwards;
+    }
+
+    .i:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: 1s;
+        animation-delay: 7.5s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(5) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: .5s;
+        animation-delay: 8s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(6) {
+        position: relative;
+        animation-name: lightblue;
+        animation-duration: .5s;
+        animation-delay: 8s;
+        animation-fill-mode: forwards;
+    }
+
+    .a:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: .5s;
+        animation-delay: 8.5s;
+    }
+
+    .b:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 1s;
+        animation-delay: 8.5s;
+    }
+
+    .c:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 1.5s;
+        animation-delay: 8.5s;
+    }
+
+    .d:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 2s;
+        animation-delay: 8.5s;
+    }
+
+    .e:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 2s;
+        animation-delay: 9s;
+    }
+
+    .f:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 2s;
+        animation-delay: 9.5s;
+    }
+
+    .g:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 2s;
+        animation-delay: 10s;
+        animation-fill-mode: forwards;
+    }
+
+    .h:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 1.5s;
+        animation-delay: 10.5s;
+        animation-fill-mode: forwards;
+    }
+
+    .i:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: 1s;
+        animation-delay: 11s;
+        animation-fill-mode: forwards;
+    }
+
+    .j:nth-child(1) {
+        position: relative;
+        animation-name: magenta;
+        animation-duration: .5s;
+        animation-delay: 11.5s;
+        animation-fill-mode: forwards;
+    }
+
+
+@keyframes orange {
+    0% {
+        background-color: #000;
+    }
+
+    100% {
+        background-color: orange;
+        border: 1px solid;
+    }
+}
+
+@keyframes lightblue {
+    0% {
+        background-color: #000;
+    }
+
+    100% {
+        background-color: #4c4cff;
+        border: 1px solid;
+    }
+}
+
+@keyframes magenta {
+    0% {
+        background-color: #000;
+    }
+
+    100% {
+        background-color: #ff00ff;
+        border: 1px solid;
+    }
+}
