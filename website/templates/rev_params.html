@@ -6,195 +6,113 @@
 
 <div id="loading">
     <br />
-    
-        <div class="tetrisbg">
-            <div class="container">
-                <div class="center">
+    <br />
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+
+        </div>
+        </div>
+    </div>
+
+
+
+        <div id="content">
+            <form method="POST">
+                <h3>Select date range for the report</h3>
+                <div class="container">
                     <div class="row">
-                        <div class="row">
-                            <div class="col-xs-2 a"></div>
-                            <div class="col-xs-2 a"></div>
-                            <div class="col-xs-2 a"></div>
-                            <div class="col-xs-2 a"></div>
-                            <div class="col-xs-2 a"></div>
-                            <div class="col-xs-2 a"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!-- Date input -->
+                                <label class="control-label" for="date">Date from</label>
+                                <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" />
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xs-2 b"></div>
-                            <div class="col-xs-2 b"></div>
-                            <div class="col-xs-2 b"></div>
-                            <div class="col-xs-2 b"></div>
-                            <div class="col-xs-2 b"></div>
-                            <div class="col-xs-2 b"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 c"></div>
-                            <div class="col-xs-2 c"></div>
-                            <div class="col-xs-2 c"></div>
-                            <div class="col-xs-2 c"></div>
-                            <div class="col-xs-2 c"></div>
-                            <div class="col-xs-2 c"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 d"></div>
-                            <div class="col-xs-2 d"></div>
-                            <div class="col-xs-2 d"></div>
-                            <div class="col-xs-2 d"></div>
-                            <div class="col-xs-2 d"></div>
-                            <div class="col-xs-2 d"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 e"></div>
-                            <div class="col-xs-2 e"></div>
-                            <div class="col-xs-2 e"></div>
-                            <div class="col-xs-2 e"></div>
-                            <div class="col-xs-2 e"></div>
-                            <div class="col-xs-2 e"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 f"></div>
-                            <div class="col-xs-2 f"></div>
-                            <div class="col-xs-2 f"></div>
-                            <div class="col-xs-2 f"></div>
-                            <div class="col-xs-2 f"></div>
-                            <div class="col-xs-2 f"></div>
-                        </div>
-                        <div class="row">
-                            <a href="#"><div class="col-xs-2 g"></div></a>
-                            <div class="col-xs-2 g"></div>
-                            <div class="col-xs-2 g"></div>
-                            <div class="col-xs-2 g"></div>
-                            <div class="col-xs-2 g"></div>
-                            <div class="col-xs-2 g"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 h"></div>
-                            <div class="col-xs-2 h"></div>
-                            <div class="col-xs-2 h"></div>
-                            <div class="col-xs-2 h"></div>
-                            <div class="col-xs-2 h"></div>
-                            <div class="col-xs-2 h"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 i"></div>
-                            <div class="col-xs-2 i"></div>
-                            <div class="col-xs-2 i"></div>
-                            <div class="col-xs-2 i"></div>
-                            <div class="col-xs-2 i"></div>
-                            <div class="col-xs-2 i"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-2 j"></div>
-                            <div class="col-xs-2 j"></div>
-                            <div class="col-xs-2 j"></div>
-                            <div class="col-xs-2 j"></div>
-                            <div class="col-xs-2 j"></div>
-                            <div class="col-xs-2 j"></div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!-- Date input -->
+                                <label class="control-label" for="date1">Date till</label>
+                                <input class="form-control" id="date1" name="date1" placeholder="YYYY-MM-DD" type="text" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-   
 
 
-<div id="content">
-                                <form method="POST">
-                                    <h3>Select date range for the report</h3>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!-- Date input -->
-                                                    <label class="control-label" for="date">Date from</label>
-                                                    <input class="form-control" id="date" name="date" placeholder="YYYY-MM-DD" type="text" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <!-- Date input -->
-                                                    <label class="control-label" for="date1">Date till</label>
-                                                    <input class="form-control" id="date1" name="date1" placeholder="YYYY-MM-DD" type="text" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <br />
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h4>Select Proposals statuses</h4>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Live" id="Live" checked disabled>
-                                                    <label class="form-check-label" for="Live">
-                                                        Live
-                                                    </label>
-                                                </div>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Submitted" id="Submitted" checked>
-                                                    <label class="form-check-label" for="Submitted">
-                                                        Submitted
-                                                    </label>
-                                                </div>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Booked" id="Booked" checked>
-                                                    <label class="form-check-label" for="Booked">
-                                                        Booked
-                                                    </label>
-                                                </div>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Ended" id="Ended" checked>
-                                                    <label class="form-check-label" for="Ended">
-                                                        Ended
-                                                    </label>
-                                                </div>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Hold" id="Hold" checked>
-                                                    <label class="form-check-label" for="Hold">
-                                                        Held
-                                                    </label>
-                                                </div>
-                                                <br />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4>Additional options:</h4>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="preempt" id="preempt">
-                                                    <label class="form-check-label" for="preempt">
-                                                        Preemptibles
-                                                    </label>
-                                                </div>
-                                                <div class="form-check param">
-                                                    <input class="form-check-input" type="checkbox" value="1" name="Allocation_Stats" id="flexCheckChecked">
-                                                    <label class="form-check-label" for="flexCheckChecked">
-                                                        Allocation statistics
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <br />
-
-                                    </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="col-md-12 text-center">
-                                                <button type="submit" class="btn btn-primary" style="width: 40%; height: 50px;" onclick="loading();">Generate</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br />
-                                    <br />
-                                    {% if session.get("ce_last_run") %}
-
-                                    <p>The last run of the report was on the {{session.get("ce_last_run")}} click <a href='/revenue/summary'>here</a> to access it! </p>
-                                    {% endif %}
-
-                                    {% endblock %}
-                                </form>
+                <br />
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Select Proposals statuses</h4>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Live" id="Live" checked disabled>
+                                <label class="form-check-label" for="Live">
+                                    Live
+                                </label>
                             </div>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Submitted" id="Submitted" checked>
+                                <label class="form-check-label" for="Submitted">
+                                    Submitted
+                                </label>
+                            </div>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Booked" id="Booked" checked>
+                                <label class="form-check-label" for="Booked">
+                                    Booked
+                                </label>
+                            </div>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Ended" id="Ended" checked>
+                                <label class="form-check-label" for="Ended">
+                                    Ended
+                                </label>
+                            </div>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Hold" id="Hold" checked>
+                                <label class="form-check-label" for="Hold">
+                                    Held
+                                </label>
+                            </div>
+                            <br />
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Additional options:</h4>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="preempt" id="preempt">
+                                <label class="form-check-label" for="preempt">
+                                    Preemptibles
+                                </label>
+                            </div>
+                            <div class="form-check param">
+                                <input class="form-check-input" type="checkbox" value="1" name="Allocation_Stats" id="flexCheckChecked">
+                                <label class="form-check-label" for="flexCheckChecked">
+                                    Allocation statistics
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-primary" style="width: 40%; height: 50px;" onclick="loading();">Generate</button>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                {% if session.get("ce_last_run") %}
+
+                <p>The last run of the report was on the {{session.get("ce_last_run")}} click <a href='/revenue/summary'>here</a> to access it! </p>
+                {% endif %}
+
+                {% endblock %}
+            </form>
+        </div>
 
 
 
