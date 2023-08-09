@@ -2,16 +2,45 @@
 {% block title %}Campaign Delivery toolkit Home {% endblock %}
 {% block content %}
 <h2>Welcome {{ user.get("name") }}!</h2>
+<hr> 
+<br>
 
     {% if config.get("ENDPOINT") %}
-<li><a href='/revenue'>Campaign Extractor</a></li>
-    {% endif %}
 
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="button-container">
+                    <a href='/revenue' class="statistics-button">Campaign Extractor</a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="button-container">
+                    <a href="/logout" class="logout-button">Logout</a>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+        <div class="row">
+            <div class="col"></div>
+            <div class="col"></div>
+        </div>
+    </div>
+
+    {% endif %}
+<br>
     {% if config.get("B2C_PROFILE_AUTHORITY") %}
 <li><a href='{{_build_auth_code_flow(authority=config["B2C_PROFILE_AUTHORITY"])["auth_uri"]}}'>Edit Profile</a></li>
     {% endif %}
 
-<li><a href="/logout">Logout</a></li>
+<!-- <li><a href="/logout">Logout here</a></li> -->
 <hr>
     {% endblock %}
 

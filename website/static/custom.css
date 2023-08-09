@@ -1,0 +1,35 @@
+.button-container {
+    text-align: center;
+    padding: 20px;
+   
+}
+
+.statistics-button {
+    display: inline-block;
+   
+    padding: 15px 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    background: url('statistics-image.jpg') no-repeat center;
+    background-size: cover;
+    transition: all 0.3s ease;
+}
+
+.logout-button {
+    background: url('logout-image.jpg') no-repeat center;
+    display: inline-block;
+    padding: 15px 30px;
+    color:white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    background-size: cover;
+    transition: all 0.3s ease;
+}
+
+.statistics-button:hover,
+.logout-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
