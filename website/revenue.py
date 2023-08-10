@@ -9,8 +9,11 @@ import app_config
 from .views import _get_token_from_cache
 from .scripts import login, proposal_search, campaign_ectractor,  run_campaign_extractor
 import asyncio
+from .email import send_email
+import os
  
 
+PASSWORD = ""
 
 
 revenue = Blueprint('revenue', __name__)
@@ -117,26 +120,31 @@ def revenue_waiting():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
-	#headers = session.get("headers", None)
 	
-	#env = session.get("env", None)
-	
-	#allocation_stats =[]
+	N = 10
+	EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
 		session["ce_last_run"] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
 		session["ce_created"] = time.strftime("%Y%m%d_%H%M%S")
+		user = session.get("user", None)
+		subject = "Campaign extractor notification "+str(session.get("ce_last_run", None))
+		body = "Campaign extractor has been trigered by "+user.get("name")+" and genertetd the report at: "+str(session.get("ce_last_run", None))
+		sender = "campaign.delivery.notification@gmail.com"
+		recipients = ["michal.dragon@clearchannel.co.uk"]
+		password = EMAIL_PASSWORD
+		send_email(subject, body, sender, recipients, password)
 		return redirect(url_for("revenue.rev_summary"))
 	else:
-		if len(session.get("iteration")) < 50:
+		if len(session.get("iteration")) < N:
 			N = len(session.get("iteration"))
 		else:
-			N = 20
+			pass
 		result = []
 		session["proposal_done"] = session.get("proposal_done") + N
 		for index in range(N):
 			result.append(session.get("iteration")[index])
 		for index in range(N):
-			opped_item = session.get("iteration").pop(0)
+			poped_item = session.get("iteration").pop(0)
 		print(session.get("iteration"))
 		print(type(result))
 		print(type(result))
