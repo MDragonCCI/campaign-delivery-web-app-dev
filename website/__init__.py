@@ -11,6 +11,8 @@ def create_app():
     app.config["SECRET_KEY"] = SECRET_KEY
     app.config.from_object(app_config)
     Session(app)
+    app.config.update(
+        SESSION_COOKIE_SECURE=True)
     # This section is needed for url_for("foo", _external=True) to automatically
     # generate http scheme when this sample is running on localhost,
     # and to generate https scheme when it is deployed behind reversed proxy.
