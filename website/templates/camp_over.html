@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Campaign Delivery {% endblock %}
+{% block content %}
+<a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
+<br />
+<h1>Campaign Extractor</h1>
+<hr>
+<h2>List of the overperforming campaigns</h2>
+<br>
+<div class="table-container">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Proposal ID</th>
+                <th scope="col">Proposal Name</th>
+                <th scope="col">Performance</th>
+                <th scope="col">BSD</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in session.get("camp_over") %}
+               
+            <tr>
+                <th>{{ item["proposal id"] }} </th>
+                <td> {{ item["proposal name"] }}  </td>
+                <td> {{ item["Campaign Performance %"] }} </td>
+                <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">Click here to see it in Broadsign Direct</a></td>
+            </tr>
+
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+
+
+
+    {% endblock %}
