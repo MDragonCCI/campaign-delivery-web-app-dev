@@ -33,3 +33,16 @@
     transform: scale(1.1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
+
+.table-fixed tbody {
+    display: block;
+    height: 85vh;
+    overflow: auto;
+}
+
+    .table-fixed thead, .table-fixed tbody tr {
+        table-layout: fixed;
+        width: 150%;
+        display: table;
+    }
+

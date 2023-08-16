@@ -165,6 +165,58 @@ def rev_summary():
 		return redirect(url_for("home.login"))
 	csv_json = session.get("temp_json", None)
 	csv_df = pd.DataFrame.from_dict(csv_json)
+	session["campaign_extractor"] = csv_df.to_dict(orient='records')
+	camp_over_perf = pd.DataFrame.from_dict(csv_json)
+	camp_on_target = pd.DataFrame.from_dict(csv_json)
+	camp_under_perf = pd.DataFrame.from_dict(csv_json)
+	to_drop_over = []
+	to_drop_under = []
+	to_drop_target = []
+	for i in range(0, len(csv_df)):
+		camp_perf = csv_df.iloc[i]["Campaign Performance %"]
+		if camp_perf == "N/A":
+			to_drop_over.append(i)
+			to_drop_target.append(i)
+			to_drop_under.append(i)
+			#print(camp_perf)
+		elif camp_perf <= 90:
+			to_drop_over.append(i)
+			to_drop_target.append(i)
+			#print(camp_perf)
+		elif camp_perf >= 110:
+			to_drop_target.append(i)
+			to_drop_under.append(i)
+		elif camp_perf > 90 and camp_perf < 110:
+			to_drop_over.append(i)
+			to_drop_under.append(i)
+		else:
+			to_drop_over.append(i)
+			to_drop_target.append(i)
+			to_drop_under.append(i)
+			#print(camp_perf)
+	#print(to_drop_over)
+	#print(to_drop_target)
+	
+	camp_over_perf.drop(camp_over_perf.index[to_drop_over], inplace = True)
+	#print(camp_over_perf)
+	camp_under_perf.drop(camp_under_perf.index[to_drop_under], inplace = True)
+	#print(camp_under_perf)
+	camp_on_target.drop(camp_on_target.index[to_drop_target], inplace = True)
+	#print(camp_on_target)
+	camp_over_dict = camp_over_perf.to_dict(orient='records')
+	session["camp_over"] = camp_over_dict
+	session["camp_over_number"] = len(camp_over_perf)
+
+	camp_under_dict = camp_under_perf.to_dict(orient='records')
+	session["camp_under"] = camp_under_dict
+	session["camp_under_number"] = len(camp_under_perf)
+
+	camp_target_dict = camp_on_target.to_dict(orient='records')
+	session["camp_target"] = camp_target_dict
+	session["camp_target_number"] = len(camp_on_target)
+
+
+
 	if request.method == "POST":
 		last_run = session.get("ce_created")
 		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_report_"+str(last_run)+".csv"}
@@ -173,7 +225,21 @@ def rev_summary():
        csv_df.to_csv(index = False),
        mimetype="text/csv",
        headers=file_headers)
-	return render_template("rev_summary.html", tables=[csv_df.to_html(classes='data', index = False)], titles=csv_df.columns.values)
+	return render_template("rev_summary.html")
+
+@revenue.route("revenue/over", methods=["GET", "POST"])
+def over():
+	return render_template("camp_over.html")
+
+@revenue.route("revenue/under", methods=["GET", "POST"])
+def under():
+	return render_template("camp_under.html")
+
+@revenue.route("revenue/target", methods=["GET", "POST"])
+def target():
+	return render_template("camp_target.html")
+
+
 
 
 
