@@ -34,15 +34,21 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.table-fixed tbody {
-    display: block;
-    height: 85vh;
-    overflow: auto;
+.tbl-container {
+    max-width: fit-content;
+    max-height: fit-content;
 }
 
-    .table-fixed thead, .table-fixed tbody tr {
-        table-layout: fixed;
-        width: 150%;
-        display: table;
-    }
+.tbl-fixed {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 40vh;
 
+}
+
+table th {
+    position: sticky;
+    background: #0094ff;
+    top: 0px;
+}

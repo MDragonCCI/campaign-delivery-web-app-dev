@@ -52,9 +52,10 @@
 </form>
 
     <br />
-  
-        <table class="table table-striped table-fixed">
-            <thead class="thead-dark">
+    <div class="container tbl-container">
+        <div class="row tbl-fixed">
+        <table class="table-striped table-condensed">
+            <thead>
                 <tr>
                     <th class="header" scope="col">Proposal ID</th>
                     <th class="header" scope="col">Proposal Name</th>
@@ -89,8 +90,10 @@
                 {% endfor %}
             </tbody>
         </table>
+        </div>
+        </div>
 
 
 
 
-    {% endblock %}
+        {% endblock %}
