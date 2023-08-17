@@ -7,30 +7,46 @@
 <hr>
 <h2>List of the underperforming campaigns</h2>
 <br>
-<div class="table-container">
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Proposal ID</th>
-                <th scope="col">Proposal Name</th>
-                <th scope="col">Performance</th>
-                <th scope="col">BSD</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in session.get("camp_under") %}
+<div class="container tbl-container">
+    <div class="row tbl-fixed">
+        <table class="table-striped table-condensed">
+            <thead>
+                <tr>
+                    <th class="header" scope="col">Proposal ID</th>
+                    <th class="header" scope="col">Proposal Name</th>
+                    <th class="header" scope="col">Proposal Line ID</th>
+                    <th class="header" scope="col">Proposal line Name</th>
+                    <th class="header" scope="col">Performance</th>
+                    <th class="header" scope="col">Start Date</th>
+                    <th class="header" scope="col">End Date</th>
+                    <th class="header" scope="col">Status</th>
+                    <th class="header" scope="col">Type of buy</th>
+                    <th class="header" scope="col">Sub type</th>
+                    <th class="header" scope="col">Number of screens</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in session.get("camp_under") %}
 
-            <tr>
-                <th>{{ item["proposal id"] }} </th>
-                <td> {{ item["proposal name"] }}  </td>
-                <td> {{ item["Campaign Performance %"] }} </td>
-                <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">Click here to see it in Broadsign Direct</a></td>
-            </tr>
+                <tr>
+                    <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
+                    <td> {{ item["proposal name"] }}  </td>
+                    <td> {{ item["PLI ID"] }}  </td>
+                    <td> {{ item["PLI Name"] }}  </td>
+                    <td> {{ item["Campaign Performance %"] }} </td>
+                    <td> {{ item["Start date"] }}  </td>
+                    <td> {{ item["End date"] }}  </td>
+                    <td> {{ item["PLI Status"] }}  </td>
+                    <td> {{ item["TOB"] }}  </td>
+                    <td> {{ item["Sub Tyoe"] }}  </td>
+                    <td> {{ item["Number of screens"] }}  </td>
+                </tr>
 
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
 
 
 
