@@ -90,7 +90,7 @@ def proposal_search():
 			start_date = datetime.date(datetime.strptime(str(start_date), "%Y-%m-%d"))
 			end_date = datetime.date(datetime.strptime(str(end_date), "%Y-%m-%d"))
 			if proposal_start is None or proposal_end is None:
-				pass
+				to_drop.append(i)
 			elif start_date > proposal_end_dt:
 				to_drop.append(i)
 			elif proposal_start_dt > end_date:
