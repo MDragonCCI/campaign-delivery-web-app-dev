@@ -78,21 +78,27 @@ def proposal_search():
 		search_df = pd.DataFrame.from_dict(search.json()["data"])
 		to_drop = []
 		for i in range(0, len(search_df)):
+			proposal_id = search_df.iloc[i]["id"]
 			proposal_start = search_df.iloc[i]["start_date"]
 			proposal_end = search_df.iloc[i]["end_date"]
 			proposal_status = search_df.iloc[i]["status"]
-			proposal_start_dt = datetime.date(datetime.strptime(proposal_start, "%Y-%m-%d"))
-			proposal_end_dt = datetime.date(datetime.strptime(proposal_end, "%Y-%m-%d"))
+			if proposal_end is None or proposal_start is None:
+				print(proposal_id)
+			else:
+				proposal_start_dt = datetime.date(datetime.strptime(proposal_start, "%Y-%m-%d"))
+				proposal_end_dt = datetime.date(datetime.strptime(proposal_end, "%Y-%m-%d"))
 			start_date = datetime.date(datetime.strptime(str(start_date), "%Y-%m-%d"))
 			end_date = datetime.date(datetime.strptime(str(end_date), "%Y-%m-%d"))
-			if start_date > proposal_end_dt:
+			if proposal_start is None or proposal_end is None:
+				pass
+			elif start_date > proposal_end_dt:
 				to_drop.append(i)
 			elif proposal_start_dt > end_date:
 				to_drop.append(i)
 
-		print(to_drop)
+		#print(to_drop)
 		search_df.drop(search_df.index[to_drop], inplace=True)
-		print(search_df)
+		#print(search_df)
 		return search_df
 	else:
 		search_df = []
