@@ -219,6 +219,22 @@
                 }
             }
         }
+
+        var $sortable = $('.sortable');
+
+        $sortable.on('click', function () {
+
+            var $this = $(this);
+            var asc = $this.hasClass('asc');
+            var desc = $this.hasClass('desc');
+            $sortable.removeClass('asc').removeClass('desc');
+            if (desc || (!asc && !desc)) {
+                $this.addClass('asc');
+            } else {
+                $this.addClass('desc');
+            }
+
+        });
     </script>
 
 </body>

@@ -51,7 +51,38 @@ table th {
     position: sticky;
     background: #0275d8;
     top: 0px;
+    min-width: 150px;
 }
+
+/* Table sort indicators */
+
+th.sortable {
+    position: relative;
+    cursor: pointer;
+}
+
+    th.sortable::after {
+        font-family: FontAwesome;
+        content: "\f0dc";
+        position: absolute;
+        right: 8px;
+        color: #999;
+    }
+
+    th.sortable.asc::after {
+        content: "\f0d8";
+    }
+
+    th.sortable.desc::after {
+        content: "\f0d7";
+    }
+
+    th.sortable:hover::after {
+        color: #333;
+    }
+
+
+
 
 #searchInput {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E"); /* Add a search icon to input */
