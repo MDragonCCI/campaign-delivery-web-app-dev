@@ -47,17 +47,16 @@
 
 }
 
-table th {
-    position: sticky;
-    background: #0275d8;
-    top: 0px;
-    min-width: 150px;
-}
+
 
 /* Table sort indicators */
 
 th.sortable {
-    position: relative;
+
+    position: sticky;
+    background: #0275d8;
+    top: 0px;
+    min-width: 150px;
     cursor: pointer;
 }
 
