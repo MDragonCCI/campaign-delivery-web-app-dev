@@ -229,14 +229,23 @@ def rev_summary():
 
 @revenue.route("revenue/over", methods=["GET", "POST"])
 def over():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
 	return render_template("camp_over.html")
 
 @revenue.route("revenue/under", methods=["GET", "POST"])
 def under():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
 	return render_template("camp_under.html")
 
 @revenue.route("revenue/target", methods=["GET", "POST"])
 def target():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
 	return render_template("camp_target.html")
 
 
