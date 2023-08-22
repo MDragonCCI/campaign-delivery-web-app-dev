@@ -33,27 +33,28 @@
 </div>
 <br />
 <br />
-<form method="POST">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h5>Report preview</h5>
-            </div>
+<div class="container">
+    <form method="POST">
+       
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Report preview</h5>
+                </div>
 
-            <div class="col-md-6">
-                <div class="col-md-12 bg-light text-right">
-                    <button type="submit" class="btn btn-primary">Download CSV</button>
+                <div class="col-md-6">
+                    <div class="col-md-12 bg-light text-right">
+                        <button type="submit" class="btn btn-primary">Download CSV</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 
-</form>
 
-<br />
-<input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+    </form>
 
+    <br />
+    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+</div>
 
 <div class="container tbl-container">
     <div class="row tbl-fixed">
@@ -64,7 +65,7 @@
                     <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
                     <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
                     <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
-                    <th class="sortable" onclick="sortTable(4)">Performance</th>
+                    <th class="sortable" onclick="sortTable(4)">Performance %</th>
                     <th class="sortable" onclick="sortTable(5)">Start Date</th>
                     <th class="sortable" onclick="sortTable(6)">End Date</th>
                     <th class="sortable" onclick="sortTable(7)">Status</th>

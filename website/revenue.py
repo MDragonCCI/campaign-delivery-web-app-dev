@@ -232,6 +232,15 @@ def over():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
+	csv_df = pd.DataFrame.from_dict(session.get("camp_over", None)) 
+	if request.method == "POST":
+		last_run = session.get("ce_created")
+		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_overperformance_report_"+str(last_run)+".csv"}
+		print(file_headers)
+		return Response(
+       csv_df.to_csv(index = False),
+       mimetype="text/csv",
+       headers=file_headers)
 	return render_template("camp_over.html")
 
 @revenue.route("revenue/under", methods=["GET", "POST"])
@@ -239,6 +248,15 @@ def under():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
+	csv_df = pd.DataFrame.from_dict(session.get("camp_under", None)) 
+	if request.method == "POST":
+		last_run = session.get("ce_created")
+		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_underperformance_report_"+str(last_run)+".csv"}
+		print(file_headers)
+		return Response(
+       csv_df.to_csv(index = False),
+       mimetype="text/csv",
+       headers=file_headers)
 	return render_template("camp_under.html")
 
 @revenue.route("revenue/target", methods=["GET", "POST"])
@@ -246,6 +264,15 @@ def target():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
+	csv_df = pd.DataFrame.from_dict(session.get("camp_target", None)) 
+	if request.method == "POST":
+		last_run = session.get("ce_created")
+		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_on_target_report_"+str(last_run)+".csv"}
+		print(file_headers)
+		return Response(
+       csv_df.to_csv(index = False),
+       mimetype="text/csv",
+       headers=file_headers)
 	return render_template("camp_target.html")
 
 

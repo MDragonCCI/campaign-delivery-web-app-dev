@@ -1,51 +1,76 @@
 {% extends "base.html" %}
 {% block title %}Campaign Delivery {% endblock %}
 {% block content %}
-<a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
-<br />
-<h1>Campaign Extractor</h1>
-<hr>
-<h2>List of the overperforming campaigns</h2>
-<br>
-<div class="container tbl-container">
-    <div class="row tbl-fixed">
-        <table class="table-striped table-condensed" id="mainTable">
-            <thead>
-                <tr>
-                    <th class="sortable" onclick="sortTable(0)">Proposal ID     </th>
-                    <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
-                    <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
-                    <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
-                    <th class="sortable" onclick="sortTable(4)">Performance</th>
-                    <th class="sortable" onclick="sortTable(5)">Start Date</th>
-                    <th class="sortable" onclick="sortTable(6)">End Date</th>
-                    <th class="sortable" onclick="sortTable(7)">Status</th>
-                    <th class="sortable" onclick="sortTable(8)">Type of buy</th>
-                    <th class="sortable" onclick="sortTable(9)">Sub type</th>
-                    <th class="sortable" onclick="sortTable(10)">Number of screens</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for item in session.get("camp_over") %}
-
-                <tr>
-                    <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
-                    <td> {{ item["proposal name"] }}  </td>
-                    <td> {{ item["PLI ID"] }}  </td>
-                    <td> {{ item["PLI Name"] }}  </td>
-                    <td> {{ item["Campaign Performance %"] }} </td>
-                    <td> {{ item["Start date"] }}  </td>
-                    <td> {{ item["End date"] }}  </td>
-                    <td> {{ item["PLI Status"] }}  </td>
-                    <td> {{ item["TOB"] }}  </td>
-                    <td> {{ item["Sub Tyoe"] }}  </td>
-                    <td> {{ item["Number of screens"] }}  </td>
-                </tr>
-
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="container">
+    <a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
+    <br />
+    <h1>Campaign Extractor</h1>
+    <hr>
+    <h2>List of the overperforming campaigns</h2>
     </div>
+    <br>
+    <div class="container">
+        <form method="POST">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Report preview</h5>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="col-md-12 bg-light text-right">
+                        <button type="submit" class="btn btn-primary">Download CSV</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </form>
+
+        <br />
+        <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+    </div>
+
+    <div class="container tbl-container">
+        <div class="row tbl-fixed">
+            <table class="table-striped table-condensed" id="mainTable">
+                <thead>
+                    <tr>
+                        <th class="sortable" onclick="sortTable(0)">Proposal ID     </th>
+                        <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
+                        <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
+                        <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
+                        <th class="sortable" onclick="sortTable(4)">Performance %</th>
+                        <th class="sortable" onclick="sortTable(5)">Start Date</th>
+                        <th class="sortable" onclick="sortTable(6)">End Date</th>
+                        <th class="sortable" onclick="sortTable(7)">Status</th>
+                        <th class="sortable" onclick="sortTable(8)">Type of buy</th>
+                        <th class="sortable" onclick="sortTable(9)">Sub type</th>
+                        <th class="sortable" onclick="sortTable(10)">Number of screens</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in session.get("camp_over") %}
+
+                    <tr>
+                        <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
+                        <td> {{ item["proposal name"] }}  </td>
+                        <td> {{ item["PLI ID"] }}  </td>
+                        <td> {{ item["PLI Name"] }}  </td>
+                        <td> {{ item["Campaign Performance %"] }} </td>
+                        <td> {{ item["Start date"] }}  </td>
+                        <td> {{ item["End date"] }}  </td>
+                        <td> {{ item["PLI Status"] }}  </td>
+                        <td> {{ item["TOB"] }}  </td>
+                        <td> {{ item["Sub Tyoe"] }}  </td>
+                        <td> {{ item["Number of screens"] }}  </td>
+                    </tr>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 
 

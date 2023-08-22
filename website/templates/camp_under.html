@@ -1,12 +1,36 @@
 {% extends "base.html" %}
 {% block title %}Campaign Delivery {% endblock %}
 {% block content %}
-<a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
+<div class="container">
+    <a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
+    <br />
+    <h1>Campaign Extractor</h1>
+    <hr>
+    <h2>List of the underperforming campaigns</h2>
+</div>
 <br />
-<h1>Campaign Extractor</h1>
-<hr>
-<h2>List of the underperforming campaigns</h2>
-<br>
+<div class="container">
+    <form method="POST">
+
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Report preview</h5>
+            </div>
+
+            <div class="col-md-6">
+                <div class="col-md-12 bg-light text-right">
+                    <button type="submit" class="btn btn-primary">Download CSV</button>
+                </div>
+            </div>
+        </div>
+
+
+
+    </form>
+
+    <br />
+    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+</div>
 <div class="container tbl-container">
     <div class="row tbl-fixed">
         <table class="table-striped table-condensed" id="mainTable">
@@ -16,7 +40,7 @@
                     <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
                     <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
                     <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
-                    <th class="sortable" onclick="sortTable(4)">Performance</th>
+                    <th class="sortable" onclick="sortTable(4)">Performance %</th>
                     <th class="sortable" onclick="sortTable(5)">Start Date</th>
                     <th class="sortable" onclick="sortTable(6)">End Date</th>
                     <th class="sortable" onclick="sortTable(7)">Status</th>
@@ -46,7 +70,7 @@
             </tbody>
         </table>
     </div>
-    </div>
+</div>
 
 
 
