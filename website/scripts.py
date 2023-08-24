@@ -150,11 +150,16 @@ async def campaign_ectractor(index):
 	#print(search_json)
 	search_df = pd.read_json(search_json)
 	allocation_stats = session.get("allocation_stats", None)
-	print(search_df)
+	#print(search_df)
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
 	env = session.get("env", None)
 	preempt = session.get("preempt", None)
+	if preempt != None:
+		preempt = 1
+	else:
+		preempt = 0
+	print(preempt)
 	print(index)
 	end_date = session.get("end_date", None)
 	index = index
@@ -223,6 +228,7 @@ async def campaign_ectractor(index):
 				pli_df = pd.DataFrame.from_dict(pli.json()["data"])
 				for i in range(0, len(pli_df)):
 					pli_is_preempt_raw = pli_df.iloc[i]["is_preemptible"]
+					print(pli_is_preempt_raw)
 					pli_status_id = pli_df.iloc[i]["status"]
 					pli_end_dt = pli_df.iloc[i]["end_date"]
 					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
@@ -236,7 +242,7 @@ async def campaign_ectractor(index):
 						to_drop.append(i)
 					elif pli_start > end_date:
 						to_drop.append(i)
-					elif pli_is_preempt_raw is True and preempt != 1:
+					elif pli_is_preempt_raw == True and preempt == 0:
 						to_drop.append(i)
 				print(to_drop)
 				pli_df.drop(pli_df.index[to_drop], inplace=True)
@@ -300,7 +306,8 @@ async def campaign_ectractor(index):
 								pli_cp = "N/A"
 								pli_perf_projected = "N/A"
 							else:
-								pli_cp = round((pli_perf_actual * 100) / pli_perf_projected,0)	
+								pli_cp = round((pli_perf_actual * 100) / pli_perf_projected, None)
+								pli_cp = int(pli_cp)
 						else:
 							pli_cp = "N/A"
 							pli_perf_projected = "N/A"
