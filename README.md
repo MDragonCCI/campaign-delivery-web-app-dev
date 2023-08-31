@@ -83,7 +83,7 @@ The Campaign Extractor uses the following dependencies:
 
 ### 3.2 Installation Steps
 
-1. Clone the Campaign Extractor repository from [https://github.com/MDragonCCI/campaign-delivery-web-app-dev].
+1. Clone the Campaign Extractor repository from [Github Repo](https://github.com/MDragonCCI/campaign-delivery-web-app-dev).
 2. Navigate to the extracted directory.
 3. Create a virtual environment (recommended) using `python3 -m venv venv` and activate it.
 4. Install required packages using `pip install -r requirements.txt`.
@@ -181,12 +181,12 @@ Keep the Campaign Extractor and its dependencies up to date. Use version control
 
 ### 10.1S Resources
 
-- [https://github.com/MDragonCCI/campaign-delivery-web-app-dev]
-- [https://direct.broadsign.com/api/v1/docs/#/]
+- [Github Repo](https://github.com/MDragonCCI/campaign-delivery-web-app-dev)
+- [Broadsign API Swagger](https://direct.broadsign.com/api/v1/docs/#/)
 
 ### 10.3 Contact Information
 
-For support or inquiries, contact [mailto:mytechsupport@clearchannelint.com].
+For support or inquiries, contact [MyTechSupport](mailto:mytechsupport@clearchannelint.com).
 
 ---
 
