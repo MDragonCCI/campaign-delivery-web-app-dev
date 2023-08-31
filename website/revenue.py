@@ -34,6 +34,7 @@ def revenue_func():
 		#start_date = request.form.get("date")
 		#end_date = request.form.get("date1")
 		email = request.form.get("email")
+		session["bsd_email"] = email
 		#allocation_stats = request.form.get("Allocation_Stats")
 		password = request.form.get("password")
 		if email == None or password == None:
@@ -82,6 +83,7 @@ def revenue_params():
 		session["preempt"] = request.form.get("preempt")
 		session["start_date"] = request.form.get("date")
 		session["end_date"] = request.form.get("date1")
+		print(type(session.get("preempt", None)))
 		print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
