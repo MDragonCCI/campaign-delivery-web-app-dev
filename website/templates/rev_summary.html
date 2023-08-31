@@ -3,16 +3,28 @@
 {% block content %}
 <h1>Campaign Extractor</h1>
 <hr>
-<h2>Report Summary</h2>
-<br>
 <div class="container">
+    <h2>Report Summary</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h5>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}. </h5>
+        </div>
+        <div class="col-md-6">
+
+            <h5> Fromn {{session.get("start_date")}} to {{session.get("end_date")}} </h5>
+        </div>
+    </div>
+</div>
+
+    <br>
+
+
     <div class="col-md-12 text-center">
         <h4>Campaign performance</h4>
     </div>
     <br />
     <div class="button-container">
-
-
+     
         <a class="btn btn-danger" href="/revenue/under" role="button">
             Campaigns underperforming: {{session.get("camp_under_number")}}
         </a>
@@ -30,7 +42,7 @@
 
 
     </div>
-</div>
+
 <br />
 <br />
 <div class="container">
@@ -42,7 +54,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="col-md-12 bg-light text-right">
+                    <div class="col-md-12 text-right">
                         <button type="submit" class="btn btn-primary">Download CSV</button>
                     </div>
                 </div>
@@ -53,7 +65,7 @@
     </form>
 
     <br />
-    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids, names and statuses...">
 </div>
 
 <div class="container tbl-container">
@@ -62,16 +74,15 @@
             <thead>
                 <tr>
                     <th class="sortable" onclick="sortTable(0)">Proposal ID     </th>
-                    <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
-                    <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
-                    <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
-                    <th class="sortable" onclick="sortTable(4)">Performance %</th>
-                    <th class="sortable" onclick="sortTable(5)">Start Date</th>
-                    <th class="sortable" onclick="sortTable(6)">End Date</th>
-                    <th class="sortable" onclick="sortTable(7)">Status</th>
-                    <th class="sortable" onclick="sortTable(8)">Type of buy</th>
-                    <th class="sortable" onclick="sortTable(9)">Sub type</th>
-                    <th class="sortable" onclick="sortTable(10)">Number of screens</th>
+                    <th class="sortable" onclick="sortTableNum(1)">BSC ID</th>
+                    <th class="sortable" onclick="sortTable(2)">Proposal line Name</th>
+                    <th class="sortable" onclick="sortTableNum(9)">Performance %</th>
+                    <th class="sortable" onclick="sortTableNum(4)">Number of screens</th>
+                    <th class="sortable" onclick="sortTable(5)">Status</th>
+                    <th class="sortable" onclick="sortTable(6)">Type of buy</th>
+                    <th class="sortable" onclick="sortTable(7)">Start Date</th>
+                    <th class="sortable" onclick="sortTable(8)">End Date</th>
+                    <th style="display:none;">Perf for sorting</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,16 +90,15 @@
 
                 <tr>
                     <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
-                    <td> {{ item["proposal name"] }}  </td>
-                    <td> {{ item["PLI ID"] }}  </td>
+                    <td> {{ item["BSC ID"] | int}}  </td>
                     <td> {{ item["PLI Name"] }}  </td>
                     <td> {{ item["Campaign Performance %"] }} </td>
-                    <td> {{ item["Start date"] }}  </td>
-                    <td> {{ item["End date"] }}  </td>
+                    <td> {{ item["Number of screens"] | int }}  </td>
                     <td> {{ item["PLI Status"] }}  </td>
                     <td> {{ item["TOB"] }}  </td>
-                    <td> {{ item["Sub Tyoe"] }}  </td>
-                    <td> {{ item["Number of screens"] }}  </td>
+                    <td> {{ item["Start date"] }}  </td>
+                    <td> {{ item["End date"] }}  </td>
+                    <td style="display:none;"> {{ item["Campaign Performance %"] | int }} </td>
                 </tr>
 
                 {% endfor %}
