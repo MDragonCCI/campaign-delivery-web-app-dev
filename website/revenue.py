@@ -11,7 +11,7 @@ from .scripts import login, proposal_search, campaign_ectractor,  run_campaign_e
 import asyncio
 from .email import send_email
 import os
- 
+from dateutil.relativedelta import relativedelta
 
 PASSWORD = ""
 
@@ -168,18 +168,63 @@ def rev_summary():
 	csv_json = session.get("temp_json", None)
 	csv_df = pd.DataFrame.from_dict(csv_json)
 	session["campaign_extractor"] = csv_df.to_dict(orient='records')
+	# Statuses char
+	statuses_df = csv_df.groupby(["PLI Status"])["PLI Status"].count()
+	print(statuses_df)
+	statuses = statuses_df.to_dict()
+	if "Booked" in statuses:
+		session["Booked_num"] = (statuses.get("Booked"))
+	else:
+		session["Booked_num"] = 0
+
+	if "Live" in statuses:
+		session["Live_num"] = (statuses.get("Live"))
+	else:
+		session["Live_num"] = 0
+
+	if "Submitted" in statuses:
+		session["Submitted_num"] = (statuses.get("Submitted"))
+	else:
+		session["Submitted_num"] = 0
+
+	if "Ended" in statuses:
+		session["Ended_num"] = (statuses.get("Ended"))
+	else:
+		session["Ended_num"] = 0
+
+	if "Held" in statuses:
+		session["Held_num"] = (statuses.get("Held"))
+	else:
+		session["Held_num"] = 0
+
 	camp_over_perf = pd.DataFrame.from_dict(csv_json)
 	camp_on_target = pd.DataFrame.from_dict(csv_json)
 	camp_under_perf = pd.DataFrame.from_dict(csv_json)
+	camp_long = pd.DataFrame.from_dict(csv_json)
 	to_drop_over = []
 	to_drop_under = []
 	to_drop_target = []
+	to_drop_long = []
 	for i in range(0, len(csv_df)):
 		camp_perf = csv_df.iloc[i]["Campaign Performance %"]
+		pli_start_date = csv_df.iloc[i]["Start date"]
+		pli_end_date = csv_df.iloc[i]["End date"]
+		pli_start_date = datetime.date(datetime.strptime(pli_start_date, "%Y-%m-%d"))
+		pli_end_date = datetime.date(datetime.strptime(pli_end_date, "%Y-%m-%d"))
+		long = datetime.date(datetime.strptime("2023-05-31", "%Y-%m-%d")) - datetime.date(datetime.strptime("2023-05-01", "%Y-%m-%d"))
+		print(long)
+		delta = pli_end_date - pli_start_date
+		if delta > long:
+			to_drop_over.append(i)
+			to_drop_under.append(i)
+		elif delta < long:
+			to_drop_long.append(i)
+
 		if camp_perf == "N/A":
 			to_drop_over.append(i)
 			to_drop_target.append(i)
 			to_drop_under.append(i)
+			to_drop_long.append(i)
 			#print(camp_perf)
 		elif camp_perf <= 90:
 			to_drop_over.append(i)
@@ -191,10 +236,12 @@ def rev_summary():
 		elif camp_perf > 90 and camp_perf < 110:
 			to_drop_over.append(i)
 			to_drop_under.append(i)
+			to_drop_long.append(i)
 		else:
 			to_drop_over.append(i)
 			to_drop_target.append(i)
 			to_drop_under.append(i)
+			to_drop_long.append(i)
 			#print(camp_perf)
 	#print(to_drop_over)
 	#print(to_drop_target)
@@ -205,6 +252,9 @@ def rev_summary():
 	#print(camp_under_perf)
 	camp_on_target.drop(camp_on_target.index[to_drop_target], inplace = True)
 	#print(camp_on_target)
+	camp_long.drop(camp_long.index[to_drop_long], inplace = True)
+	
+	
 	camp_over_dict = camp_over_perf.to_dict(orient='records')
 	session["camp_over"] = camp_over_dict
 	session["camp_over_number"] = len(camp_over_perf)
@@ -216,6 +266,10 @@ def rev_summary():
 	camp_target_dict = camp_on_target.to_dict(orient='records')
 	session["camp_target"] = camp_target_dict
 	session["camp_target_number"] = len(camp_on_target)
+
+	camp_long_dict = camp_long.to_dict(orient='records')
+	session["camp_long"] = camp_long_dict
+	session["camp_long_number"] = len(camp_long)
 
 
 
@@ -276,6 +330,24 @@ def target():
        mimetype="text/csv",
        headers=file_headers)
 	return render_template("camp_target.html")
+
+
+
+@revenue.route("revenue/long", methods=["GET", "POST"])
+def long():
+	token = _get_token_from_cache(app_config.SCOPE)
+	if not token:
+		return redirect(url_for("home.login"))
+	csv_df = pd.DataFrame.from_dict(session.get("camp_long", None)) 
+	if request.method == "POST":
+		last_run = session.get("ce_created")
+		file_headers = {"Content-disposition": "attachment; filename=campaign_extractor_long_campaigns_report_"+str(last_run)+".csv"}
+		print(file_headers)
+		return Response(
+       csv_df.to_csv(index = False),
+       mimetype="text/csv",
+       headers=file_headers)
+	return render_template("camp_long.html")
 
 
 
