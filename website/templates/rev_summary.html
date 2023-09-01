@@ -2,63 +2,75 @@
 {% block title %}Campaign Delivery toolkit Home {% endblock %}
 {% block content %}
 <h1>Campaign Extractor</h1>
-<hr>
+<hr/>
+
 <div class="container">
     <h2>Report Summary</h2>
+    <br/>
     <div class="row">
         <div class="col-md-6">
             <h5>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}. </h5>
+            <h5> From {{session.get("start_date")}} to {{session.get("end_date")}} </h5>
+            <br/>
+            <h4>Campaign performance</h4>
+            
+            <br />
+            <div class="d-grid gap-2">
+
+                <a class="btn btn-danger" style="width: 250px" href="/revenue/under" role="button">
+                    Campaigns underperforming: {{session.get("camp_under_number")}}
+                </a>
+                <br />
+                <br/>
+
+
+                <a class="btn btn-warning" style="width: 250px" href="/revenue/over" role="button">
+                    Campaigns overperforming: {{session.get("camp_over_number")}}
+                </a>
+                <br />
+                <br />
+                <a class="btn btn-info" style="width: 250px" href="/revenue/long" role="button">
+                    Long Campaigns: {{session.get("camp_long_number")}}
+                </a>
+                <br />
+                <br />
+
+                <a class="btn btn-success" style="width: 250px" href="/revenue/target" role="button">
+                    Campaigns on the target: {{session.get("camp_target_number")}}
+                </a>
+
+
+            </div>
         </div>
         <div class="col-md-6">
-
-            <h5> Fromn {{session.get("start_date")}} to {{session.get("end_date")}} </h5>
+            <canvas id="myChart" width="150" height="75"></canvas>
+           
         </div>
     </div>
 </div>
 
-    <br>
-
-
-    <div class="col-md-12 text-center">
-        <h4>Campaign performance</h4>
-    </div>
-    <br />
-    <div class="button-container">
-     
-        <a class="btn btn-danger" href="/revenue/under" role="button">
-            Campaigns underperforming: {{session.get("camp_under_number")}}
-        </a>
+<br>
 
 
 
-        <a class="btn btn-warning" href="/revenue/over" role="button">
-            Campaigns overperforming: {{session.get("camp_over_number")}}
-        </a>
-
-
-        <a class="btn btn-success" href="/revenue/target" role="button">
-            Campaigns on target: {{session.get("camp_target_number")}}
-        </a>
-
-
-    </div>
+ 
 
 <br />
 <br />
 <div class="container">
     <form method="POST">
-       
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Report preview</h5>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="col-md-12 text-right">
-                        <button type="submit" class="btn btn-primary">Download CSV</button>
-                    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Report preview</h5>
+            </div>
+
+            <div class="col-md-6">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary">Download CSV</button>
                 </div>
             </div>
+        </div>
 
 
 
@@ -110,7 +122,31 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Live', 'Booked', 'Submitted', 'Ended', 'Held'],
+            datasets: [{
+                label: 'Campagins',
+                data: [{{ session.get("Live_num") }}, {{ session.get("Booked_num") }},  {{ session.get("Submitted_num") }}, {{ session.get("Ended_num") }}, {{ session.get("Held_num") }} ],
+        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+        hoverOffset: 4
+            }]
+            }
+       
+    });
+
+
+
+
+
+
+</script>
 
 
 

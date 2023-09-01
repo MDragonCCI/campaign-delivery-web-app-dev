@@ -443,7 +443,7 @@ async def campaign_ectractor(index):
 					elif pli_status_id == 14:
 						pli_status = "Ended"
 					elif pli_status_id == 4:
-						pli_status = "Hold"
+						pli_status = "Held"
 					else:
 						pli_status = "Other "+str(pli_status_id)
 					csv_row = {
