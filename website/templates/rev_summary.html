@@ -9,42 +9,43 @@
     <br/>
     <div class="row">
         <div class="col-md-6">
-            <h5>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}. </h5>
-            <h5> From {{session.get("start_date")}} to {{session.get("end_date")}} </h5>
+            <h6>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}. </h6>
+            <h6> From {{session.get("start_date")}} to {{session.get("end_date")}} </h6>
             <br/>
             <h4>Campaign performance</h4>
             
             <br />
             <div class="d-grid gap-2">
 
-                <a class="btn btn-danger" style="width: 250px" href="/revenue/under" role="button">
-                    Campaigns underperforming: {{session.get("camp_under_number")}}
+                <a class="btn btn-danger" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Underperforming: When performance is lower than 90%" href="/revenue/under" role="button">
+                    Underperforming: {{session.get("camp_under_number")}}
                 </a>
                 <br />
                 <br/>
 
 
-                <a class="btn btn-warning" style="width: 250px" href="/revenue/over" role="button">
-                    Campaigns overperforming: {{session.get("camp_over_number")}}
+                <a class="btn btn-warning" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Overperforming: When performance is greater than 110%" href="/revenue/over" role="button">
+                    Overperforming: {{session.get("camp_over_number")}}
                 </a>
                 <br />
                 <br />
-                <a class="btn btn-info" style="width: 250px" href="/revenue/long" role="button">
-                    Long Campaigns: {{session.get("camp_long_number")}}
+                <a class="btn btn-info" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Long-term: For campaigns that are 30 days long or more" href="/revenue/long" role="button">
+                    Long-term: {{session.get("camp_long_number")}}
                 </a>
                 <br />
                 <br />
 
-                <a class="btn btn-success" style="width: 250px" href="/revenue/target" role="button">
-                    Campaigns on the target: {{session.get("camp_target_number")}}
+                <a class="btn btn-success" style="width: 220px" data-toggle="tooltip" data-placement="right" title="On target: performance between 90% and 110%" href="/revenue/target" role="button">
+                    On-target: {{session.get("camp_target_number")}}
                 </a>
 
 
             </div>
         </div>
         <div class="col-md-6">
-            <canvas id="myChart" width="150" height="75"></canvas>
-           
+            <div class="chart-container" style="height:40vh; width:40vw">
+            <canvas id="myChart"></canvas>
+        </div>
         </div>
     </div>
 </div>
@@ -55,7 +56,6 @@
 
  
 
-<br />
 <br />
 <div class="container">
     <form method="POST">
@@ -137,7 +137,10 @@
         backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
         hoverOffset: 4
             }]
-            }
+            },
+        options: {
+            radius: '90%'
+        }
        
     });
 

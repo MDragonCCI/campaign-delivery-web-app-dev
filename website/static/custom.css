@@ -55,6 +55,7 @@ th.sortable {
 
     position: sticky;
     background: #0275d8;
+    color: white;
     top: 0px;
     min-width: 150px;
     cursor: pointer;
