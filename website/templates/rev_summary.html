@@ -2,19 +2,19 @@
 {% block title %}Campaign Delivery toolkit Home {% endblock %}
 {% block content %}
 <h1>Campaign Extractor</h1>
-<hr/>
+
 
 <div class="container">
     <h2>Report Summary</h2>
     <br/>
     <div class="row">
         <div class="col-md-6">
-            <h6>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}. </h6>
-            <h6> From {{session.get("start_date")}} to {{session.get("end_date")}} </h6>
-            <br/>
-            <h4>Campaign performance</h4>
+            <p>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}.
+            From {{session.get("start_date")}} to {{session.get("end_date")}} </p>
             
-            <br />
+            <h6>Campaign performance</h6>
+            
+            
             <div class="d-grid gap-2">
 
                 <a class="btn btn-danger" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Underperforming: When performance is lower than 90%" href="/revenue/under" role="button">
@@ -43,7 +43,7 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="chart-container" style="height:40vh; width:40vw">
+            <div class="chart-container" style="height:30vh; width:30vw">
             <canvas id="myChart"></canvas>
         </div>
         </div>
@@ -62,7 +62,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <h5>Report preview</h5>
+                <h6>Report preview</h6>
             </div>
 
             <div class="col-md-6">
@@ -76,7 +76,7 @@
 
     </form>
 
-    <br />
+    
     <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids, names and statuses...">
 </div>
 
@@ -139,7 +139,16 @@
             }]
             },
         options: {
-            radius: '90%'
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Campaigns statuses breakdown',
+                    position: 'top'
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
         }
        
     });
