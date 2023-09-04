@@ -90,7 +90,7 @@ def revenue_params():
 		elif request.form.get("date1") == "" or request.form.get("date") == "":
 			flash("Dates are missing", category = "error")
 		else:
-			flash("Creation of the report started. It might take few minutes to complite. Please do not refresh the page", category="success")
+			flash("Creation of the report started. It might take few minutes to complete. Please do not refresh the page", category="success")
 			session["ce_last_run"] = None
 			session["temp_json"] = []
 			search_df = proposal_search()
@@ -219,6 +219,8 @@ def rev_summary():
 			to_drop_under.append(i)
 		elif delta < long:
 			to_drop_long.append(i)
+		else:
+			pass
 
 		if camp_perf == "N/A":
 			to_drop_over.append(i)
