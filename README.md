@@ -26,15 +26,14 @@
     - 7.1 [Common Issues](#71-common-issues)
     - 7.2 [Logging](#72-logging)
 8. [Security Considerations](#8-security-considerations)
-    - 8.1 [Data Handling](#81-data-handling) Saml2.0
+    - 8.1 [Data Handling](#81-data-handling) 
     - 8.2 [Authorization and Authentication](#82-authorization-and-authentication)
 9. [Maintenance and Updates](#9-maintenance-and-updates)
     - 9.1 [Regular Maintenance](#91-regular-maintenance)
     - 9.2 [Updates and Versioning](#92-updates-and-versioning)
 10. [Appendix](#10-appendix)
-    - 10.1 [Glossary](#101-glossary)
-    - 10.2 [Resources](#102-resources)
-    - 10.3 [Contact Information](#103-contact-information) Contact info 
+    - 10.1 [Resources](#101-resources)
+    - 10.2 [Contact](#102-contact-information)
 
 ---
 
@@ -74,7 +73,7 @@ The Campaign Extractor uses the following dependencies:
 
 ---
 
-## 3. Installation and Setup
+## 3. Installation and Setup 
 
 ### 3.1 Prerequisites
 
@@ -157,6 +156,7 @@ The Campaign Extractor logs its activities to the console and a log file specifi
 ### 8.1 Data Handling
 
 Ensure that sensitive information such as API keys and passwords are stored securely and not exposed in the configuration.
+Saml2.0 for configurations
 
 ### 8.2 Authorization and Authentication
 
@@ -178,13 +178,12 @@ Keep the Campaign Extractor and its dependencies up to date. Use version control
 
 ## 10. Appendix
 
-
-### 10.1S Resources
+### 10.1 Resources
 
 - [Github Repo](https://github.com/MDragonCCI/campaign-delivery-web-app-dev)
 - [Broadsign API Swagger](https://direct.broadsign.com/api/v1/docs/#/)
 
-### 10.3 Contact Information
+### 10.2 Contact Information
 
 For support or inquiries, contact [MyTechSupport](mailto:mytechsupport@clearchannelint.com).
 
