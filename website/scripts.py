@@ -303,13 +303,13 @@ async def campaign_ectractor(index):
 							if pli_perf_projected is None:
 								pli_perf_projected = 0
 							if pli_perf_actual < 1 or pli_perf_projected < 1:
-								pli_cp = "N/A"
+								pli_cp = None
 								pli_perf_projected = "N/A"
 							else:
 								pli_cp = round((pli_perf_actual * 100) / pli_perf_projected, None)
 								pli_cp = int(pli_cp)
 						else:
-							pli_cp = "N/A"
+							pli_cp = None
 							pli_perf_projected = "N/A"
 
 						if (pli_status_id == 9 and allocation_stats == 1) or (pli_status_id == 10 and allocation_stats == 1) or (pli_status_id == 11 and allocation_stats == 1):
@@ -419,7 +419,7 @@ async def campaign_ectractor(index):
 						pli_imp_boundary = "N/A"
 						pli_std = "N/A"
 						pli_mean = "N/A"
-						pli_cp = "N/A"
+						pli_cp = None
 						pli_perf_projected = "N/A"
                     
 					
@@ -443,7 +443,7 @@ async def campaign_ectractor(index):
 					elif pli_status_id == 14:
 						pli_status = "Ended"
 					elif pli_status_id == 4:
-						pli_status = "Hold"
+						pli_status = "Held"
 					else:
 						pli_status = "Other "+str(pli_status_id)
 					csv_row = {

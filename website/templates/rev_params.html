@@ -105,12 +105,16 @@
                 </div>
                 <br />
                 <br />
-                {% if session.get("ce_last_run") %}
+                <div class="container">
+                    <div calss="row">
+                        {% if session.get("ce_last_run") %}
 
-                <p>The last run of the report was on the {{session.get("ce_last_run")}} click <a href='/revenue/summary'>here</a> to access it! </p>
-                {% endif %}
+                        <p>The last run of the report was on the {{session.get("ce_last_run")}} click <a href='/revenue/summary'>here</a> to access it! </p>
+                        {% endif %}
 
-                {% endblock %}
+                        {% endblock %}
+                    </div>
+                </div>
             </form>
         </div>
 

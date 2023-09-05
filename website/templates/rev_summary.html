@@ -2,58 +2,82 @@
 {% block title %}Campaign Delivery toolkit Home {% endblock %}
 {% block content %}
 <h1>Campaign Extractor</h1>
-<hr>
-<h2>Report Summary</h2>
-<br>
+
+
 <div class="container">
-    <div class="col-md-12 text-center">
-        <h4>Campaign performance</h4>
-    </div>
-    <br />
-    <div class="button-container">
+    <h2>Report Summary</h2>
+    <br/>
+    <div class="row">
+        <div class="col-md-6">
+            <p>Created on {{session.get("ce_last_run")}} by {{ session.get("bsd_email") }}.
+            From {{session.get("start_date")}} to {{session.get("end_date")}} </p>
+            
+            <h6>Campaign performance</h6>
+            
+            
+            <div class="d-grid gap-2">
+
+                <a class="btn btn-danger" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Underperforming: When performance is lower than 90%" href="/revenue/under" role="button">
+                    Underperforming: {{session.get("camp_under_number")}}
+                </a>
+                <br />
+                <br/>
 
 
-        <a class="btn btn-danger" href="/revenue/under" role="button">
-            Campaigns underperforming: {{session.get("camp_under_number")}}
-        </a>
+                <a class="btn btn-warning" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Overperforming: When performance is greater than 110%" href="/revenue/over" role="button">
+                    Overperforming: {{session.get("camp_over_number")}}
+                </a>
+                <br />
+                <br />
+                <a class="btn btn-info" style="width: 220px" data-toggle="tooltip" data-placement="right" title="Long-term: For campaigns that are 30 days long or more" href="/revenue/long" role="button">
+                    Long-term: {{session.get("camp_long_number")}}
+                </a>
+                <br />
+                <br />
+
+                <a class="btn btn-success" style="width: 220px" data-toggle="tooltip" data-placement="right" title="On target: performance between 90% and 110%" href="/revenue/target" role="button">
+                    On-target: {{session.get("camp_target_number")}}
+                </a>
 
 
-
-        <a class="btn btn-warning" href="/revenue/over" role="button">
-            Campaigns overperforming: {{session.get("camp_over_number")}}
-        </a>
-
-
-        <a class="btn btn-success" href="/revenue/target" role="button">
-            Campaigns on target: {{session.get("camp_target_number")}}
-        </a>
-
-
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="chart-container" style="height:300px; width:300px">
+            <canvas id="myChart"></canvas>
+        </div>
+        </div>
     </div>
 </div>
-<br />
+
+<br>
+
+
+
+ 
+
 <br />
 <div class="container">
     <form method="POST">
-       
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Report preview</h5>
-                </div>
 
-                <div class="col-md-6">
-                    <div class="col-md-12 bg-light text-right">
-                        <button type="submit" class="btn btn-primary">Download CSV</button>
-                    </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h6>Report preview</h6>
+            </div>
+
+            <div class="col-md-6">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-primary">Download CSV</button>
                 </div>
             </div>
+        </div>
 
 
 
     </form>
 
-    <br />
-    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids and names...">
+    
+    <input type="text" id="searchInput" onkeyup="tableSearch()" placeholder="Search for ids, names and statuses...">
 </div>
 
 <div class="container tbl-container">
@@ -62,16 +86,15 @@
             <thead>
                 <tr>
                     <th class="sortable" onclick="sortTable(0)">Proposal ID     </th>
-                    <th class="sortable" onclick="sortTable(1)">Proposal Name</th>
-                    <th class="sortable" onclick="sortTable(2)">Proposal Line ID   </th>
-                    <th class="sortable" onclick="sortTable(3)">Proposal line Name</th>
-                    <th class="sortable" onclick="sortTable(4)">Performance %</th>
-                    <th class="sortable" onclick="sortTable(5)">Start Date</th>
-                    <th class="sortable" onclick="sortTable(6)">End Date</th>
-                    <th class="sortable" onclick="sortTable(7)">Status</th>
-                    <th class="sortable" onclick="sortTable(8)">Type of buy</th>
-                    <th class="sortable" onclick="sortTable(9)">Sub type</th>
-                    <th class="sortable" onclick="sortTable(10)">Number of screens</th>
+                    <th class="sortable" onclick="sortTableNum(1)">BSC ID</th>
+                    <th class="sortable" onclick="sortTable(2)">Proposal line Name</th>
+                    <th class="sortable" onclick="sortTableNum(9)">Performance %</th>
+                    <th class="sortable" onclick="sortTableNum(4)">Number of screens</th>
+                    <th class="sortable" onclick="sortTable(5)">Status</th>
+                    <th class="sortable" onclick="sortTable(6)">Type of buy</th>
+                    <th class="sortable" onclick="sortTable(7)">Start Date</th>
+                    <th class="sortable" onclick="sortTable(8)">End Date</th>
+                    <th style="display:none;">Perf for sorting</th>
                 </tr>
             </thead>
             <tbody>
@@ -79,16 +102,15 @@
 
                 <tr>
                     <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
-                    <td> {{ item["proposal name"] }}  </td>
-                    <td> {{ item["PLI ID"] }}  </td>
+                    <td> {{ item["BSC ID"] | int}}  </td>
                     <td> {{ item["PLI Name"] }}  </td>
                     <td> {{ item["Campaign Performance %"] }} </td>
-                    <td> {{ item["Start date"] }}  </td>
-                    <td> {{ item["End date"] }}  </td>
+                    <td> {{ item["Number of screens"] | int }}  </td>
                     <td> {{ item["PLI Status"] }}  </td>
                     <td> {{ item["TOB"] }}  </td>
-                    <td> {{ item["Sub Tyoe"] }}  </td>
-                    <td> {{ item["Number of screens"] }}  </td>
+                    <td> {{ item["Start date"] }}  </td>
+                    <td> {{ item["End date"] }}  </td>
+                    <td style="display:none;"> {{ item["Campaign Performance %"] | int }} </td>
                 </tr>
 
                 {% endfor %}
@@ -100,7 +122,43 @@
 
 
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Live', 'Booked', 'Submitted', 'Ended', 'Held'],
+            datasets: [{
+                label: 'Campagins',
+                data: [{{ session.get("Live_num") }}, {{ session.get("Booked_num") }},  {{ session.get("Submitted_num") }}, {{ session.get("Ended_num") }}, {{ session.get("Held_num") }} ],
+        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+        hoverOffset: 4
+            }]
+            },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Campaigns statuses breakdown',
+                    position: 'top'
+                },
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+       
+    });
+
+
+
+
+
+
+</script>
 
 
 

@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Campaign Delivery{% endblock %}
 {% block content %}
-<br />
+<br/>
 <div class="container">
     <a class="btn btn-outline-primary" href="/revenue/summary" role="button">Go back to the summary page</a>
     <br />
     <h1>Campaign Extractor</h1>
     <hr>
-    <h2>List of the campaigns on target</h2>
+    <h2>List of the long campaigns</h2>
 </div>
 <br>
 <div class="container">
@@ -51,7 +51,7 @@
                 </tr>
             </thead>
             <tbody>
-                {% for item in session.get("camp_target") %}
+                {% for item in session.get("camp_long") %}
                 <tr>
                     <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
                     <td> {{ item["BSC ID"] | int }}  </td>
