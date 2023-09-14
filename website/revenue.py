@@ -222,7 +222,7 @@ def rev_summary():
 		else:
 			pass
 
-		if camp_perf == "N/A":
+		if camp_perf == "N/A" or camp_perf is None:
 			to_drop_over.append(i)
 			to_drop_target.append(i)
 			to_drop_under.append(i)
