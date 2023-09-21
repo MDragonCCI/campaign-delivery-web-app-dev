@@ -132,7 +132,7 @@ def revenue_waiting():
 		subject = "Campaign extractor notification "+str(session.get("ce_last_run", None))
 		body = "Campaign extractor has been trigered by "+user.get("name")+" and genertetd the report at: "+str(session.get("ce_last_run", None))
 		sender = "campaign.delivery.notification@gmail.com"
-		recipients = ["michal.dragon@clearchannel.co.uk"]
+		recipients = ["michal.dragon@clearchannel.co.uk", "david.davila@clearchannelint.com"]
 		password = EMAIL_PASSWORD
 		send_email(subject, body, sender, recipients, password)
 		return redirect(url_for("revenue.rev_summary"))
