@@ -53,7 +53,7 @@
             <tbody>
                 {% for item in session.get("camp_target") %}
                 <tr>
-                    <td> <a href="{{session.get("env")}}/proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
+                    <td> <a href="{{session.get("env")}}proposal_builder.html?id={{item["proposal id"]}}" target="_blank">{{ item["proposal id"] }}</a></td>
                     <td> {{ item["BSC ID"] | int }}  </td>
                     <td> {{ item["PLI Name"] }}  </td>
                     <td> {{ item["Campaign Performance %"] }} </td>
