@@ -74,7 +74,7 @@ def revenue_params():
 		#print(request.form)
 		start_date = request.form.get("date")
 		end_date = request.form.get("date1")
-		print(type(start_date), end_date)
+		#print(type(start_date), end_date)
 		session["allocation_stats"] = request.form.get("Allocation_Stats")
 		session["submitted"] = request.form.get("Submitted")
 		session["booked"] = request.form.get("Booked")
@@ -83,8 +83,8 @@ def revenue_params():
 		session["preempt"] = request.form.get("preempt")
 		session["start_date"] = request.form.get("date")
 		session["end_date"] = request.form.get("date1")
-		print(type(session.get("preempt", None)))
-		print(start_date, end_date)
+		#print(type(session.get("preempt", None)))
+		#print(start_date, end_date)
 		if end_date < start_date:
 			flash("Start date is grater then end date", category="error")
 		elif request.form.get("date1") == "" or request.form.get("date") == "":
@@ -100,7 +100,7 @@ def revenue_params():
 			iteration = [i for i in range(0, n)]
 			session["iteration"] = iteration
 			search_json = search_df.to_json()
-			print(search_df)
+			#print(search_df)
 			if search_df is None:
 				flash("Search error try again", category = "error")
 			else:
@@ -111,7 +111,7 @@ def revenue_params():
 				#asyncio.run(run_campaign_extractor(search_df, allocation_stats))
 				session["is_done"] = 1
 				session["search_json"] = search_json
-				print(session.get("search_df"))
+				#print(session.get("search_df"))
 				return redirect(url_for("revenue.revenue_waiting"))
 	return render_template("rev_params.html")
 
@@ -123,7 +123,7 @@ def revenue_waiting():
 	if not token:
 		return redirect(url_for("home.login"))
 	
-	N = 10
+	N = 5
 	EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 	if len(session.get("iteration")) == 0 and session.get("is_done") == 1:
 		session["ce_last_run"] = time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
@@ -147,9 +147,9 @@ def revenue_waiting():
 			result.append(session.get("iteration")[index])
 		for index in range(N):
 			poped_item = session.get("iteration").pop(0)
-		print(session.get("iteration"))
-		print(type(result))
-		print(type(result))
+		#print(session.get("iteration"))
+		#print(type(result))
+		#print(type(result))
 		asyncio.run(run_campaign_extractor(result))
 	#proposal_total_numbers = session.get("proposal_total_numbers")
 	#proposal_done = session.get("proposal_done")
@@ -212,7 +212,7 @@ def rev_summary():
 		pli_start_date = datetime.date(datetime.strptime(pli_start_date, "%Y-%m-%d"))
 		pli_end_date = datetime.date(datetime.strptime(pli_end_date, "%Y-%m-%d"))
 		long = datetime.date(datetime.strptime("2023-05-31", "%Y-%m-%d")) - datetime.date(datetime.strptime("2023-05-01", "%Y-%m-%d"))
-		print(long)
+		#print(long)
 		delta = pli_end_date - pli_start_date
 		if delta > long:
 			to_drop_over.append(i)
