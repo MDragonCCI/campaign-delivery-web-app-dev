@@ -168,6 +168,7 @@ async def campaign_ectractor(index):
 	else:
 		allocation_stats = 0
 	csv_data = {
+	"BS Direct": [],
     "proposal id": [],
     "proposal name": [],
      "PLI ID": [],
@@ -607,7 +608,8 @@ async def campaign_ectractor(index):
 						pli_status = "Other "+str(pli_status_id)
 					proposal_hyperlink = F'=HYPERLINK("{env}proposal_builder.html?id={proposal_id}", "{proposal_id}")'
 					csv_row = {
-    "proposal id": proposal_hyperlink,
+	"BS Direct": proposal_hyperlink,
+    "proposal id": proposal_id,
     "proposal name": proposal_name,
     "PLI ID": pli_id,
     "PLI Name": pli_name,
