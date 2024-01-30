@@ -130,11 +130,11 @@
     new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['Live', 'Booked', 'Submitted', 'Ended', 'Held'],
+            labels: ['Live', 'Booked', 'Submitted', 'Ended', 'Held', 'Saved'],
             datasets: [{
                 label: 'Campagins',
-                data: [{{ session.get("Live_num") }}, {{ session.get("Booked_num") }},  {{ session.get("Submitted_num") }}, {{ session.get("Ended_num") }}, {{ session.get("Held_num") }} ],
-        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850"],
+                data: [{{ session.get("Live_num") }}, {{ session.get("Booked_num") }},  {{ session.get("Submitted_num") }}, {{ session.get("Ended_num") }}, {{ session.get("Held_num") }}, {{session.get("Saved_num")}} ],
+        backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#FFA500"],
         hoverOffset: 4
             }]
             },

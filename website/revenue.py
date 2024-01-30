@@ -80,6 +80,7 @@ def revenue_params():
 		session["booked"] = request.form.get("Booked")
 		session["ended"] = request.form.get("Ended")
 		session["hold"] = request.form.get("Hold")
+		session["saved"] = request.form.get("Saved")
 		session["preempt"] = request.form.get("preempt")
 		session["start_date"] = request.form.get("date")
 		session["end_date"] = request.form.get("date1")
@@ -170,7 +171,7 @@ def rev_summary():
 	session["campaign_extractor"] = csv_df.to_dict(orient='records')
 	# Statuses char
 	statuses_df = csv_df.groupby(["PLI Status"])["PLI Status"].count()
-	print(statuses_df)
+	#print(statuses_df)
 	statuses = statuses_df.to_dict()
 	if "Booked" in statuses:
 		session["Booked_num"] = (statuses.get("Booked"))
@@ -196,6 +197,11 @@ def rev_summary():
 		session["Held_num"] = (statuses.get("Held"))
 	else:
 		session["Held_num"] = 0
+
+	if "Saved" in statuses:
+		session["Saved_num"] = (statuses.get("Saved"))
+	else:
+		session["Saved_num"] = 0
 
 	camp_over_perf = pd.DataFrame.from_dict(csv_json)
 	camp_on_target = pd.DataFrame.from_dict(csv_json)

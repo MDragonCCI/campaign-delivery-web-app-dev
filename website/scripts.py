@@ -43,6 +43,7 @@ def proposal_search():
 	booked = session.get("booked", None)
 	ended = session.get("ended", None)
 	hold = session.get("hold", None)
+	saved = session.get("saved", None)
 	preempt = session.get("preempt", None)
 	start_date = session.get("start_date", None)
 	end_date = session.get("end_date", None)
@@ -56,6 +57,9 @@ def proposal_search():
 	if hold != None:
 		status.append("held")
 		status.append("partially_held")
+	if saved != None:
+		status.append("saved")
+	
 
 	
 	search_url = env+"api/v1/proposal/search"
@@ -150,6 +154,7 @@ async def campaign_ectractor(index):
 	#print(search_json)
 	search_df = pd.read_json(search_json)
 	allocation_stats = session.get("allocation_stats", None)
+	saved = session.get("saved", None)
 	#print(search_df)
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
@@ -159,8 +164,8 @@ async def campaign_ectractor(index):
 		preempt = 1
 	else:
 		preempt = 0
-	print(preempt)
-	print(index)
+	#print(preempt)
+	#print(index)
 	end_date = session.get("end_date", None)
 	index = index
 	if allocation_stats != None:
@@ -173,6 +178,7 @@ async def campaign_ectractor(index):
     "proposal name": [],
      "PLI ID": [],
     "PLI Name": [],
+	"Slot Duration": [],
     "TOB": [],
     "Sub Type": [],
     "Number of screens": [],
@@ -243,7 +249,7 @@ async def campaign_ectractor(index):
 				pli_df = pd.DataFrame.from_dict(pli.json()["data"])
 				for i in range(0, len(pli_df)):
 					pli_is_preempt_raw = pli_df.iloc[i]["is_preemptible"]
-					print(pli_is_preempt_raw)
+					#print(pli_is_preempt_raw)
 					pli_status_id = pli_df.iloc[i]["status"]
 					pli_end_dt = pli_df.iloc[i]["end_date"]
 					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
@@ -252,7 +258,7 @@ async def campaign_ectractor(index):
 					pli_std = "N/A"
 					pli_mean = "N/A"
 					sacrificed_flag = "N/A"
-					if pli_status_id == 1:
+					if saved == None and pli_status_id == 1:
 						to_drop.append(i)
 					elif pli_status_id == 12:
 						to_drop.append(i)
@@ -277,6 +283,7 @@ async def campaign_ectractor(index):
 					pli_boundary = "N/A"
 					pli_id = pli_df.iloc[index2]["id"]
 					pli_name = pli_df.iloc[index2]["name"]
+					pli_slot_duration = pli_df.iloc[index2]["slot_duration"]
 					pli_tob = pli_df.iloc[index2]["active_type"]
 					pli_cr_tm = pli_df.iloc[index2]["creation_tm"]
 					pli_act_imp = pli_df.iloc[index2]["actual_impressions"]
@@ -341,6 +348,7 @@ async def campaign_ectractor(index):
 							else:
 								pli_cp = round((pli_perf_actual * 100) / pli_perf_projected, None)
 								pli_cp = int(pli_cp)
+								#pli_cp = f"{pli_cp}%"
 						else:
 							pli_cp = None
 							pli_perf_projected = "N/A"
@@ -463,6 +471,8 @@ async def campaign_ectractor(index):
 							pli_imp_boundary = "N/A"
 						else:
 							pli_imp_boundary = pli_tob_values["goal_impressions_upper_boundary"]
+							pli_imp_boundary = pli_imp_boundary  * 100
+							pli_imp_boundary  = f"{pli_imp_boundary}%"
                     
 						try:
 							pli_tob_values["expected_repetitions"]
@@ -489,6 +499,8 @@ async def campaign_ectractor(index):
 							pli_av_sov_l_boundary = "N/A"
 						else:
 							pli_av_sov_l_boundary = pli_tob_values["average_sov_lower_boundary"]
+							pli_av_sov_l_boundary = pli_av_sov_l_boundary * 100
+							pli_av_sov_l_boundary = f"{pli_av_sov_l_boundary}%"
                             
 						try:
 							pli_tob_values["average_sov_upper_boundary"]
@@ -498,6 +510,8 @@ async def campaign_ectractor(index):
 							pli_av_sov_u_boundary = "N/A"
 						else:
 							pli_av_sov_u_boundary = pli_tob_values["average_sov_upper_boundary"]
+							pli_av_sov_u_boundary = pli_av_sov_u_boundary * 100
+							pli_av_sov_u_boundary = f"{pli_av_sov_u_boundary}%S"
                      
 						try:
 							pli_tob_values["average_sov"]
@@ -564,12 +578,13 @@ async def campaign_ectractor(index):
 					#print(long)
 					date_now = time.strftime("%Y-%m-%d", time.gmtime())
 					delta = datetime.date(datetime.strptime(str(pli_end), "%Y-%m-%d")) - datetime.date(datetime.strptime(str(date_now), "%Y-%m-%d"))
+					camp_lenght = datetime.date(datetime.strptime(str(pli_end), "%Y-%m-%d"))  - datetime.date(datetime.strptime(str(pli_start), "%Y-%m-%d")) 
 					#print( long, delta)
 					
 
 					if pli_mean == 0:
 						sacrificed_flag = "No allocated plays"
-					elif delta > long:
+					elif camp_lenght > long and delta > long:
 						pass
 					elif pli_tob == "goal_impressions" and predicted_imps < 90:
 						sacrificed_flag = "Delivery risk"
@@ -604,6 +619,8 @@ async def campaign_ectractor(index):
 						pli_status = "Ended"
 					elif pli_status_id == 4:
 						pli_status = "Held"
+					elif pli_status_id == 1:
+						pli_status = "Saved"
 					else:
 						pli_status = "Other "+str(pli_status_id)
 					proposal_hyperlink = F'=HYPERLINK("{env}proposal_builder.html?id={proposal_id}", "{proposal_id}")'
@@ -613,6 +630,7 @@ async def campaign_ectractor(index):
     "proposal name": proposal_name,
     "PLI ID": pli_id,
     "PLI Name": pli_name,
+	"Slot Duration": pli_slot_duration,
     "TOB": pli_tob,
     "Sub Type": pli_tob_sub,
     "Number of screens": pli_no_of_screens,
@@ -651,11 +669,11 @@ async def campaign_ectractor(index):
 	"Forecast impressions in %": predicted_impressions
 }
 
-					if pli_status_id == 1 and pli_status_id == 12:
+					if pli_status_id == 12:
 						pass
 					elif pli_status_id == 14 and start_date >= pli_end:
 						pass
-					elif pli_status_id != 1 and pli_status_id != 12:
+					elif pli_status_id != 12:
 						session["temp_json"].append(csv_row)
 						#csv_df.loc[len(csv_df)] = csv_row
 						#print(csv_row)
