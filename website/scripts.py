@@ -302,6 +302,7 @@ async def campaign_ectractor(index):
 					pli_start_dt = pli_df.iloc[index2]["start_date"]
 					pli_end_dt = pli_df.iloc[index2]["end_date"]
 					pli_end =  datetime.date(datetime.strptime(pli_end_dt, "%Y-%m-%d"))
+					pli_start = datetime.date(datetime.strptime(pli_start_dt, "%Y-%m-%d"))
 					pli_start_tm = pli_df.iloc[index2]["start_time"]
 					pli_end_tm = pli_df.iloc[index2]["end_time"]
 					pli_dow = pli_df.iloc[index2]["dow_mask"]
@@ -585,14 +586,17 @@ async def campaign_ectractor(index):
 					if pli_mean == 0:
 						sacrificed_flag = "No allocated plays"
 					elif camp_lenght > long and delta > long:
+						#print(f"*******Skipped one {pli_id} and camp length {camp_lenght} delta is {delta} and the period is {long}. Start {pli_start} and end {pli_end}")
 						pass
 					elif pli_tob == "goal_impressions" and predicted_imps < 90:
+						#print(f"**** {pli_id}camp length {camp_lenght} delta is {delta} and the period is {long}. Start {pli_start} and end {pli_end}")
 						sacrificed_flag = "Delivery risk"
 
 					elif pli_tob == "goal_repetitions" and predicted_reps < 90:
 						sacrificed_flag = "Delivery risk"
 
 					elif pli_tob == "sov" and predicted_reps < 90:
+						#print(f"**** {pli_id}camp length {camp_lenght} delta is {delta} and the period is {long}. Start {pli_start} and end {pli_end}")
 						sacrificed_flag = "Delivery risk"
 
 					elif pli_tob == "average_sov" and predicted_reps < 90:
