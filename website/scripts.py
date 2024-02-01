@@ -377,6 +377,7 @@ async def campaign_ectractor(index):
 								#print(playout_url)
 								playout = requests.request("GET", url = playout_url, headers=headers, data=[])
 								if playout.status_code == 200:
+								
 									
 									total_page = playout.json()["total_pages"]
 
@@ -424,7 +425,8 @@ async def campaign_ectractor(index):
 
 										#print(f"just before break statment total {total_page} and curren {page}")
 										#print(f"proposal id {proposal_id} reps {pli_allocated_reps} and imps {pli_allocated_imps}") 
-
+								else:
+									break
 										
 
 								if int(total_page) == int(page):
