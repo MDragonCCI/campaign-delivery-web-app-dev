@@ -59,6 +59,8 @@ def proposal_search():
 		status.append("partially_held")
 	if saved != None:
 		status.append("saved")
+		status.append("cancelled")
+		status.append("cancelling")
 	
 
 	
@@ -87,7 +89,8 @@ def proposal_search():
 			proposal_end = search_df.iloc[i]["end_date"]
 			proposal_status = search_df.iloc[i]["status"]
 			if proposal_end is None or proposal_start is None:
-				print(proposal_id)
+				#print(proposal_id)
+				pass
 			else:
 				proposal_start_dt = datetime.date(datetime.strptime(proposal_start, "%Y-%m-%d"))
 				proposal_end_dt = datetime.date(datetime.strptime(proposal_end, "%Y-%m-%d"))
