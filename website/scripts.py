@@ -205,6 +205,7 @@ async def campaign_ectractor(index):
     "End date": [],
     "End time": [],
     "DoW mask": [],
+	"Hold Expiry Date": [],
     "BSC ID": [],
     "Priority": [],
     "Is pre-empt": [],
@@ -232,6 +233,7 @@ async def campaign_ectractor(index):
 
 		proposal_id = search_df.iloc[index]["id"]
 		proposal_name = search_df.iloc[index]["name"]
+		proposal_hold_expiery_tm = search_df.iloc[index]["hold_expiry_tm"]
 		proposal_start = search_df.iloc[index]["start_date"]
 		proposal_end = search_df.iloc[index]["end_date"]
 		proposal_status = search_df.iloc[index]["status"]
@@ -663,6 +665,7 @@ async def campaign_ectractor(index):
     "End date": pli_end_dt,
     "End time": pli_end_tm,
     "DoW mask": pli_dow,
+	"Hold Expiry Date": proposal_hold_expiery_tm,
     "BSC ID": pli_bsc_id,
     "Priority": pli_prio,
     "Is pre-empt": pli_is_preempt,
