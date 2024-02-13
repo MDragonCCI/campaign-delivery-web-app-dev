@@ -7,7 +7,7 @@ import time
 import io
 import app_config
 from .views import _get_token_from_cache
-from .scripts import login, proposal_search, campaign_ectractor,  run_campaign_extractor
+from .scripts import login, proposal_search, run_campaign_extractor
 import asyncio
 from .email import send_email
 import os
