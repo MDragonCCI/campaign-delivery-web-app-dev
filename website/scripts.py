@@ -442,10 +442,15 @@ async def campaign_ectractor(index):
 							
 							try:
 								df_sat.loc[df_sat['average_saturation']== -1, 'average_saturation' ] =0
+								df_repetitions.repetitions.agg(["sum"])
+								df_impressions.impressions.agg(["sum"])
 							except NameError:
 								pli_std = "N/A"
 								pli_mean = "N/A"
 							except KeyError:
+								pli_std = "N/A"
+								pli_mean = "N/A"
+							except AttributeError:
 								pli_std = "N/A"
 								pli_mean = "N/A"
 							else:
