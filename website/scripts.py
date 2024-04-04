@@ -370,8 +370,15 @@ async def campaign_ectractor(index):
 							df1 = pd.DataFrame(df1)
 							df2 = pd.DataFrame(df2)
 							df3 = pd.DataFrame(df3)
-							df_impressions = df_impressions.drop(df_impressions.index, inplace=True)
-							df_repetitions = df_repetitions.drop(df_repetitions.index, inplace=True)
+							try:
+								df_impressions = df_impressions.drop(df_impressions.index, inplace=True)
+							except AttributeError:
+								pass
+							try:
+								df_repetitions = df_repetitions.drop(df_repetitions.index, inplace=True)
+							except AttributeError:
+								pass
+							
 
 							while 1 == 1:
 								page += 1 
