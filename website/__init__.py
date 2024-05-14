@@ -3,6 +3,7 @@ import app_config
 from flask_session import Session  # https://pythonhosted.org/Flask-Session
 from .views import _build_auth_code_flow
 import os
+from .scripts import login, proposal_search, run_campaign_extractor
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -25,10 +26,13 @@ def create_app():
 
     from .revenue import revenue
     from .views import home
+    from .availibility import availibility
 
     
     app.register_blueprint(revenue, url_prefix='/')
     app.register_blueprint(home, url_prefix='/')
+    app.register_blueprint(availibility, url_prefix='/')
+    
     
 
 
