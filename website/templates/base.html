@@ -30,6 +30,9 @@
                     <li class="nav-item">
                         <a class="nav-link" id="revenue" href="/revenue">Campaign Extractor</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="availibility" href="/availibility"> Availibility Checker</a>
+                    </li>
 
                 </ul>
                 {% if session.get("user") %}
@@ -316,6 +319,51 @@
 
         });
     </script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize datepicker for start date and end date fields
+        $('.datepicker').datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+            
+        });
+
+        // Set default values for start date and end date fields
+        var startDate = new Date();
+        var endDate = new Date();
+        endDate.setDate(endDate.getDate() + 6);
+
+        $('#startDate').val(formatDate(startDate));
+        $('#endDate').val(formatDate(endDate));
+
+        // Show/hide additional input based on dropdown selection
+        $('#typeOfBuys').on('change', function() {
+            if (this.value === 'frequency') {
+                $('#additionalInput').html('<label for="additionalValue">Value:</label><input type="number" class="form-control" id="additionalValue" name="additionalValue" value="1">');
+            } else if (this.value === 'sov') {
+                $('#additionalInput').html('<label for="additionalValue">Value:</label><input type="text" class="form-control" id="additionalValue" name="additionalValue" value="16.66">');
+            }
+
+        });
+
+        // Function to format date as yyyy-mm-dd
+        function formatDate(date) {
+            var year = date.getFullYear();
+            var month = ('0' + (date.getMonth() + 1)).slice(-2);
+            var day = ('0' + date.getDate()).slice(-2);
+            return year + '-' + month + '-' + day;
+        }
+    });
+
+    
+</script>
+
 
 
 

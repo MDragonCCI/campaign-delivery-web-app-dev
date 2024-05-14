@@ -37,13 +37,27 @@
 .tbl-container {
     max-width: fit-content;
     max-height: fit-content;
+   
 }
+
 
 .tbl-fixed {
     overflow-x: scroll;
     overflow-y: scroll;
     height: fit-content;
     max-height: 40vh;
+
+}
+
+.tbl-fixed-avail-table {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 40vh;
+    width: fit-content;
+   
+    
+
 
 }
 
@@ -93,4 +107,51 @@ th.sortable {
     padding: 12px 20px 12px 40px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
+}
+
+
+#dataTable thead th {
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    cursor: pointer; /* Show pointer cursor on hover */
+    position: relative; /* Enable positioning for sort icons */
+}
+
+/* Sort icon placement */
+#dataTable thead th::after {
+    content: '\2191\2193'; /* Unicode up-down arrow characters */
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Sort icon rotation for ascending */
+#dataTable thead th.sorting_asc::after {
+    content: '\2191'; /* Unicode up arrow character */
+}
+
+/* Sort icon rotation for descending */
+#dataTable thead th.sorting_desc::after {
+    content: '\2193'; /* Unicode down arrow character */
+}
+
+
+.spinner {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
