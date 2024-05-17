@@ -12,16 +12,16 @@ import asyncio
 from .email import send_email
 import os
 from dateutil.relativedelta import relativedelta
-from .availibility_func import availibility_checker
+from .availability_func import availability_checker
 
 PASSWORD = ""
 
 
-availibility = Blueprint('availibility', __name__)
+availability = Blueprint('availability', __name__)
 
 
-@availibility.route('/availibility', methods=["GET", "POST"])
-def availibility_func():
+@availability.route('/availability', methods=["GET", "POST"])
+def availability_func():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
@@ -48,13 +48,13 @@ def availibility_func():
 				session["headers"] = header
 				session["iteration"] = []
 				session["is_done"] = 0
-				return redirect(url_for("availibility.availibility_params"))
+				return redirect(url_for("availability.availibility_params"))
 	return render_template("revenue.html")
 
 
 
 
-@availibility.route('/availibility/parmas', methods=["GET", "POST"])
+@availability.route('/availability/parmas', methods=["GET", "POST"])
 def availibility_params():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
@@ -78,7 +78,7 @@ def availibility_params():
 		elif date_range < min_dates:
 			flash("Date range is lower then 7 days", category="error")
 		else:
-			results = availibility_checker()
+			results = availability_checker()
 			session["avail_downloads"] = results.to_dict(orient='records')
 			table_headers = results.columns.tolist()
 			day_1 = table_headers[4]
@@ -93,19 +93,20 @@ def availibility_params():
 			print(results)
 			
 			print(table_headers)
+			print(pd. __version__) 
 			session["avail_table"] = results.to_dict(orient='records')
 			session["col_headers"] = table_headers
 			
-	return render_template("availibility_params.html")
+	return render_template("availability_params.html")
 
 
-@availibility.route('/availibility/parmas/download', methods=["GET", "POST"])
-def long():
+@availability.route('/availability/parmas/download', methods=["GET", "POST"])
+def download():
 	token = _get_token_from_cache(app_config.SCOPE)
 	if not token:
 		return redirect(url_for("home.login"))
 	csv_df = pd.DataFrame.from_dict(session.get("avail_downloads", None)) 
-	file_headers = {"Content-disposition": "attachment; filename=Availibility_checker.csv"}
+	file_headers = {"Content-disposition": "attachment; filename=Availability_checker.csv"}
 	print(file_headers)
 	return Response(
        csv_df.to_csv(index = False),

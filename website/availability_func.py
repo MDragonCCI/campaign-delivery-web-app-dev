@@ -7,7 +7,7 @@ import io
 from flask import flash, session
 import asyncio
 
-def availiblity_frequency(headers, env, date, duration, tob_value):
+def availability_frequency(headers, env, date, duration, tob_value):
 	search_url = f"{env}api/v1/screen/search"
 	search_pl = json.dumps(
 		{
@@ -66,7 +66,7 @@ def availiblity_frequency(headers, env, date, duration, tob_value):
 
 
 
-def availibility_checker():
+def availability_checker():
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
 	env = session.get("env", None)
@@ -80,7 +80,7 @@ def availibility_checker():
 		
 		date = end_date
 		while date >= start_date:
-			df = availiblity_frequency(headers, env, date, duration, tob_value)
+			df = availability_frequency(headers, env, date, duration, tob_value)
 		
 			#print(len(result))
 			if len(result) < 1 and  date == start_date:

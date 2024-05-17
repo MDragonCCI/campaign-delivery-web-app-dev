@@ -26,12 +26,12 @@ def create_app():
 
     from .revenue import revenue
     from .views import home
-    from .availibility import availibility
+    from .availability import availability
 
     
     app.register_blueprint(revenue, url_prefix='/')
     app.register_blueprint(home, url_prefix='/')
-    app.register_blueprint(availibility, url_prefix='/')
+    app.register_blueprint(availability, url_prefix='/')
     
     
 
