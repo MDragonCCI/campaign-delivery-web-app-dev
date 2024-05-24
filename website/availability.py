@@ -65,7 +65,7 @@ def availability_func():
 		else:
 			#Token has been captured. Save it in vars and redirect to the next page
 			session["headers"] = header
-			session["env"] = request.form.get("env")
+			session["env"] = env
 			return redirect(url_for("availability.availibility_params"))
 	else:
 		pass
