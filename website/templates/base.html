@@ -30,9 +30,11 @@
                     <li class="nav-item">
                         <a class="nav-link" id="revenue" href="/revenue">Campaign Extractor</a>
                     </li>
+                    {%if "clearchannelint.com" or "clearchannel.co.uk" in session.get("user")["name"] %}
                     <li class="nav-item">
-                        <a class="nav-link" id="availability" href="/availability"> Availability Checker</a>
+                        <a class="nav-link" id="availability" href="/availability"> Availability Checker UK</a>
                     </li>
+                    {% endif %}
 
                 </ul>
                 {% if session.get("user") %}

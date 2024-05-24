@@ -2,11 +2,10 @@ import requests
 import pandas as pd
 import json
 from datetime import datetime, timedelta
-import time
-import io
 from flask import flash, session
-import asyncio
 
+
+#Func to create a payload for frequency type of buy and check basic availability for one day
 def availability_frequency(headers, env, date, duration, tob_value):
 	search_url = f"{env}api/v1/screen/search"
 	search_pl = json.dumps(
@@ -53,6 +52,8 @@ def availability_frequency(headers, env, date, duration, tob_value):
     "keywords": []
 }
     )
+
+	#Call BS Direct endpoint to get availability information for screens
 	screen_search = requests.request("POST", url=search_url, headers=headers, data=search_pl, files=[])
 	if screen_search.status_code == 200:
 		screens_df = pd.DataFrame.from_dict(screen_search.json()["data"])
@@ -65,8 +66,9 @@ def availability_frequency(headers, env, date, duration, tob_value):
 	
 
 
-
+#Availability Checker func
 def availability_checker():
+	#Pull varables from the session
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
 	env = session.get("env", None)
@@ -75,14 +77,20 @@ def availability_checker():
 	type_of_buy = session.get("type_of_buy", None)
 	tob_value = session.get("tob_value", None)
 	print(f"{start_date}, {end_date}, {duration}, {env}, {tob_value}, {type_of_buy}")
+	
+	#Validation to check what type of buy was selected in UI
 	if type_of_buy == "frequency":
+		#Clear the resutl var
 		result = []
 		
+		#Availability function checkes availability for each day starting from the end date and moving to the start date
 		date = end_date
 		while date >= start_date:
+			#call func to chack basic availibility for one day
 			df = availability_frequency(headers, env, date, duration, tob_value)
 		
 			#print(len(result))
+			#Aggreagte and merge all data into one DF to create a report
 			if len(result) < 1 and  date == start_date:
 				df3 = df
 				df = df.astype({"availability": "int"})
@@ -106,9 +114,12 @@ def availability_checker():
 				df3.rename(columns={"id": "Screen Id", "orientation": "Orientation", "resolution": "Resolution", "name": "Name"}, inplace=True)
 				df.rename(columns={"availability": f"{date}", "id": "Screen Id"}, inplace=True)
 				
+				#Extract commercial ID from the name
+				df3[['To remove', 'Commercial ID']] = df3['Name'].str.split('_', expand=True)
+				
 				df.drop(df.columns.difference([f"{date}", "Screen Id"]), 1, inplace=True)
 				#print(df3)
-				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution" ]), 1, inplace=True)
+				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution", "Commercial ID" ]), 1, inplace=True)
 				df2 = result
 				#print(df3)
 				result = pd.merge(df, df2, on='Screen Id')
