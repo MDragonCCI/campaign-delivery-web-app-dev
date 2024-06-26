@@ -15,6 +15,7 @@ requests>=2,<3
 msal>=1.7,<2
 app_config
 pandas<2
+numpy<2
 secure
 
 
