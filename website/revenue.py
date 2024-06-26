@@ -9,7 +9,7 @@ import app_config
 from .views import _get_token_from_cache
 from .scripts import login, proposal_search, run_campaign_extractor
 import asyncio
-from .email import send_email
+from .email_func import send_email
 import os
 from dateutil.relativedelta import relativedelta
 

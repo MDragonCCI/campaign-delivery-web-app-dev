@@ -163,32 +163,30 @@
         themeToggle.addEventListener("click", toggleTheme);
     </script>
 
-    <script>
-        // Search for table function. Create imput and you can search thru 4 first columns.
-        function tableSearch() {
-            var input, filter, table, tr, td, td2, td3, td4, i, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("mainTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                td2 = tr[i].getElementsByTagName("td")[1];
-                td3 = tr[i].getElementsByTagName("td")[2];
-                td6 = tr[i].getElementsByTagName("td")[5];
-                if (td || td2 || td3 || td6) {
-                    txtValue = td.textContent || td.innerText;
-                    txtValue2 = td2.textContent || td2.innerText;
-                    txtValue3 = td3.textContent || td3.innerText;
-                    txtValue4 = td6.textContent || td6.innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1 || txtValue4.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                    } else {
-                        tr[i].style.display = "none";
+<script>
+    document.getElementById("searchInput").addEventListener("input", searchTable);
+    
+    function searchTable() {
+        var input = document.getElementById("searchInput").value.toLowerCase();
+        var values = input.split(" ");
+        var table = document.getElementById("mainTable");
+        var tr = table.getElementsByTagName("tr");
+    
+        for (var i = 1; i < tr.length; i++) {
+            tr[i].style.display = "none"; // Hide all rows initially
+    
+            var td = tr[i].getElementsByTagName("td");
+            for (var j = 0; j < td.length; j++) {
+                for (var k = 0; k < values.length; k++) {
+                    if (td[j].innerHTML.toLowerCase().indexOf(values[k]) > -1) {
+                        tr[i].style.display = ""; // Show the row if any value matches
+                        break;
                     }
                 }
+                if (tr[i].style.display === "") break; // No need to check other cells if row is already shown
             }
         }
+    }
     </script>
 
 

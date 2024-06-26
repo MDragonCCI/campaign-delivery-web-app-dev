@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import app_config
 from .views import _get_token_from_cache
 from .scripts import login
-from .email import send_email
+from .email_func import send_email
 from dateutil.relativedelta import relativedelta
 from .availability_func import availability_checker
 import os
@@ -124,18 +124,19 @@ def availibility_params():
 			
 			#Take table headers for UI
 			table_headers = results.columns.tolist()
+			print(table_headers)
 			#Prepare data for the UI preview for first 7 days
-			day_1 = table_headers[5]
-			day_2 = table_headers[6]
-			day_3 = table_headers[7]
-			day_4 = table_headers[8]
-			day_5 = table_headers[9]
-			day_6 = table_headers[10]
-			day_7 = table_headers[11]
+			day_1 = table_headers[8]
+			day_2 = table_headers[9]
+			day_3 = table_headers[10]
+			day_4 = table_headers[11]
+			day_5 = table_headers[12]
+			day_6 = table_headers[13]
+			day_7 = table_headers[14]
 			#Update the names of the first 7 days to map them in UI
 			results.rename(columns={f"{day_1}": "Day 1", f"{day_2}": "Day 2", f"{day_3}": "Day 3", f"{day_4}": "Day 4", f"{day_5}": "Day 5", f"{day_6}": "Day 6", f"{day_7}": "Day 7"}, inplace=True)
             #print(f"{start_date}, {end_date}, {tob_value}, {duration}, {type_of_buy}")
-			#print(results)
+			print(results)
 			#print(table_headers)
 			#print(pd. __version__) 
 			

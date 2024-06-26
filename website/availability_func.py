@@ -3,6 +3,12 @@ import pandas as pd
 import json
 from datetime import datetime, timedelta
 from flask import flash, session
+from .dist_code import dist_code
+from .frame_service import frame_bsd_data
+import numpy as np
+
+
+
 
 
 #Func to create a payload for frequency type of buy and check basic availability for one day
@@ -68,6 +74,7 @@ def availability_frequency(headers, env, date, duration, tob_value):
 
 #Availability Checker func
 def availability_checker():
+	df_dist_code =  dist_code()
 	#Pull varables from the session
 	start_date = session.get("start_date", None)
 	headers = session.get("headers", None)
@@ -114,12 +121,32 @@ def availability_checker():
 				df3.rename(columns={"id": "Screen Id", "orientation": "Orientation", "resolution": "Resolution", "name": "Name"}, inplace=True)
 				df.rename(columns={"availability": f"{date}", "id": "Screen Id"}, inplace=True)
 				
-				#Extract commercial ID from the name
-				df3[['To remove', 'Commercial ID']] = df3['Name'].str.split('_', expand=True)
+				
+				#print(df_dist_code)	
+				#df3[['To remove', 'Commercial ID']] = df3['Name'].str.split('_', expand=True)
+				#df3["District Code"] = df3['To remove'].str[:4]
+				#df3 = df3.astype({"District Code": "int"})
+				df4 = frame_bsd_data()
+				#print(df4)
+				#print("Up df4 and down df3")
+				#print(df3)
+				#df5 = pd.merge(df3, df4, how="left", on="Screen Id")
+				#print("***************")
+				#print(df5)
+				df_dist_code = df_dist_code.astype({"District Code": "int"})
+				df3 = df3.merge(df4, how="left", on='Screen Id')
+				df3["District Code"].fillna(0, inplace = True)
+				df3 = df3.astype({"District Code": "int"})
+
+				#print(df4)
+				#print(df3)
+				#print(df3.columns.tolist())
+				
+				df3 = df3.merge(df_dist_code, how="left", on="District Code")
 				
 				df.drop(df.columns.difference([f"{date}", "Screen Id"]), 1, inplace=True)
 				#print(df3)
-				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution", "Commercial ID" ]), 1, inplace=True)
+				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution", "Commercial ID", "District Code", "District", "Product" ]), 1, inplace=True)
 				df2 = result
 				#print(df3)
 				result = pd.merge(df, df2, on='Screen Id')
@@ -143,6 +170,7 @@ def availability_checker():
 	#name = result.pop("name")
 	#result.insert(1, "Name", name)
 	return result
+
 
 	
 	
