@@ -93,18 +93,21 @@
                                     <tr>
                                         <th class="sortable" onclick="sortTableNum(0)">{{ session.get("col_headers")[0] }}</th>
                                         <th class="sortable" onclick="sortTable(1)">{{ session.get("col_headers")[4] }}</th>
-                                        <th class="sortable" onclick="sortTable(1)">{{ session.get("col_headers")[5] }}</th>
-                                        <th class="sortable" onclick="sortTable(7)">{{ session.get("col_headers")[6] }}</th>
-                                        <th class="sortable" onclick="sortTable(2)">{{ session.get("col_headers")[1] }}</th>
-                                        <th class="sortable" onclick="sortTable(3)">{{ session.get("col_headers")[2] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(4)">{{ session.get("col_headers")[3] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(5)">{{ session.get("col_headers")[8] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(6)">{{ session.get("col_headers")[9] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(7)">{{ session.get("col_headers")[10] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(8)">{{ session.get("col_headers")[11] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(9)">{{ session.get("col_headers")[12] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(10)">{{ session.get("col_headers")[13] }}</th>
-                                        <th class="sortable" onclick="sortTableNum(11)">{{ session.get("col_headers")[14] }}</th>
+                                        <th class="sortable" onclick="sortTable(2)">{{ session.get("col_headers")[5] }}</th>
+                                        <th class="sortable" onclick="sortTable(3)">{{ session.get("col_headers")[6] }}</th>
+                                        <th class="sortable" onclick="sortTable(4)">{{ session.get("col_headers")[1] }}</th>
+                                        <th class="sortable" onclick="sortTable(5)">{{ session.get("col_headers")[2] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(6)">{{ session.get("col_headers")[3] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(7)">{{ session.get("col_headers")[9] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(8)">{{ session.get("col_headers")[10] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(9)">{{ session.get("col_headers")[14] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(10)">{{ session.get("col_headers")[16] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(11)">{{ session.get("col_headers")[17] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(12)">{{ session.get("col_headers")[18] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(13)">{{ session.get("col_headers")[19] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(14)">{{ session.get("col_headers")[20] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(15)">{{ session.get("col_headers")[21] }}</th>
+                                        <th class="sortable" onclick="sortTableNum(16)">{{ session.get("col_headers")[22] }}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -117,6 +120,9 @@
                                             <td>{{ item["Name"] }}</td>
                                             <td>{{ item["Resolution"] }}</td>
                                             <td>{{ item["Orientation"] }}</td>
+                                            <td>{{ item["Post Code"] }}</td>
+                                            <td>{{ item["TV Area"] }}</td>
+                                            <td>{{ item["Size"] }}</td>
                                             <td>{{ item["Day 1"] }}</td>
                                             <td>{{ item["Day 2"] }}</td>
                                             <td>{{ item["Day 3"] }}</td>

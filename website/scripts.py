@@ -359,7 +359,7 @@ async def campaign_ectractor(index):
 							pli_cp = None
 							pli_perf_projected = "N/A"
 
-						if (pli_status_id == 9 and allocation_stats == 1) or (pli_status_id == 10 and allocation_stats == 1) or (pli_status_id == 11 and allocation_stats == 1):
+						if (pli_status_id == 4 and allocation_stats == 1) or (pli_status_id == 9 and allocation_stats == 1) or (pli_status_id == 10 and allocation_stats == 1) or (pli_status_id == 11 and allocation_stats == 1):
 							
 							
 							      

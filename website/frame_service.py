@@ -68,7 +68,15 @@ def frame_bsd_data():
         "Screen Id":[],
         "Commercial ID": [],
         "District Code": [],
-        "Product": []
+        "Product": [],
+        "Panel ID": [],
+        "Address": [],
+        "Post Code": [],
+        "TV Area": [],
+        "Conurbation": [],
+        "Latitude": [],
+        "Longitude": [],
+        "Size": []
     }
     frame_df = frame_service_df()
     for i in range(0, len(frame_df)):
@@ -83,13 +91,30 @@ def frame_bsd_data():
         #    dist_code = 0
         else:
             commercial_id = frame_df.iloc[i]["externalSystemIdentifiers"]["space"]["commercialFrameId"] # commercialFrameId
-            
             product = frame_df.iloc[i]["commercialInfo"]["product"]["name"] #Product
+            panel_id = frame_df.iloc[i]["externalSystemIdentifiers"]["oasis"]["panelId"] # Oasis ID
+            address = frame_df.iloc[i]["location"]["address"] #Address of the panel
+            post_code = frame_df.iloc[i]["location"]["postcode"] #Postcode
+            tv_area = frame_df.iloc[i]["location"]["levels"]["level1"] # TV area
+            conurbation = frame_df.iloc[i]["location"]["levels"]["level2"] # Conurbation
+            lat = frame_df.iloc[i]["location"]["geoLocation"]["latitude"] # latitude
+            long = frame_df.iloc[i]["location"]["geoLocation"]["longitude"] #longitude
+            size= frame_df.iloc[i]["physicalCharacteristics"]["size"] # Size
+
             #print(screen_id)
             data["Screen Id"].append(int(screen_id))
             data["Commercial ID"].append(int(commercial_id))
             data["District Code"].append(int(dist_code))
             data["Product"].append(product)
+            data["Panel ID"].append(panel_id)
+            data["Address"].append(address)
+            data["Post Code"].append(post_code)
+            data["TV Area"].append(tv_area)
+            data["Conurbation"].append(conurbation)
+            data["Latitude"].append(lat)
+            data["Longitude"].append(long)
+            data["Size"].append(size)
+
             
        
     

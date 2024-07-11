@@ -146,7 +146,7 @@ def availability_checker():
 				
 				df.drop(df.columns.difference([f"{date}", "Screen Id"]), 1, inplace=True)
 				#print(df3)
-				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution", "Commercial ID", "District Code", "District", "Product" ]), 1, inplace=True)
+				df3.drop(df3.columns.difference(["Screen Id", "Name", "Orientation",  "Resolution", "Commercial ID", "District Code", "District", "Product",  "Panel ID", "Address", "Post Code", "TV Area", "Conurbation", "Latitude", "Longitude", "Size" ]), 1, inplace=True)
 				df2 = result
 				#print(df3)
 				result = pd.merge(df, df2, on='Screen Id')

@@ -5,6 +5,7 @@ from flask_session import Session  # https://pythonhosted.org/Flask-Session
 import msal
 import app_config
 
+
 home = Blueprint('home', __name__)
 
 
