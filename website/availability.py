@@ -116,7 +116,10 @@ def availibility_params():
 		#If the dates pass the validation procces to check availability
 		else:
 			#Call availibility function
-			results = availability_checker()
+			try:
+				results = availability_checker()
+			except AttributeError:
+				return redirect(url_for("availability.availability_func"))
 			#Save resuylkt into the session var to use it for download CSV
 			session["avail_downloads"] = results.to_dict(orient='records')
 			
