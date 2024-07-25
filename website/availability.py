@@ -119,6 +119,7 @@ def availibility_params():
 			try:
 				results = availability_checker()
 			except AttributeError:
+				flash("Broadsign Direct session has expired. Please try again", category="error")
 				return redirect(url_for("availability.availability_func"))
 			#Save resuylkt into the session var to use it for download CSV
 			session["avail_downloads"] = results.to_dict(orient='records')
@@ -146,6 +147,7 @@ def availibility_params():
 			#Save data to session vars to display them in UI
 			session["avail_table"] = results.to_dict(orient='records')
 			session["col_headers"] = table_headers
+			return redirect(url_for("availability.availibility_params"))
 			
 	return render_template("availability_params.html")
 
